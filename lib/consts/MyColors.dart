@@ -19,6 +19,8 @@ class MyColors {
   static Color gradientFEnd = Color(0xFFBEE7CD);
   static Color gradientLStart = Color(0xFF20bf55);
   static Color gradientendLEnd = Color(0xFF01baef);
+  static Color homeGradientStart = Color(0xFF009603);
+  static Color homeGradientEnd = Color(0xFF20BF40);
 
   static Color starterColor = Color(0xFF009603);
   static Color endColor = Color(0xFF56DA78);
