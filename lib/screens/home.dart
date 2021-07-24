@@ -57,6 +57,8 @@ class HomeScreen extends StatelessWidget {
                     'https://image.flaticon.com/icons/png/512/17/17004.png'),
                 new Image.network(
                     'https://image.flaticon.com/icons/png/512/17/17004.png'),
+                new Image.network(
+                    'https://image.flaticon.com/icons/png/512/17/17004.png'),
               ],
               dotSize: 4.0,
               dotSpacing: 15.0,
