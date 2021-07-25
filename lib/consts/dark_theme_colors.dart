@@ -11,7 +11,8 @@ class Styles {
       primarySwatch: Colors.green,
       primaryColor: isDarkTheme ? MyColors.mainColor : Colors.grey.shade300,
       accentColor: MyColors.secondaryColor,
-      backgroundColor: isDarkTheme ? Colors.grey.shade700 : Colors.white,
+      backgroundColor:
+          isDarkTheme ? MyColors.darkBackground : Colors.grey.shade200,
       indicatorColor: isDarkTheme ? Colors.grey : MyColors.endColor2,
       buttonColor: isDarkTheme ? Color(0xff3B3B3B) : Color(0xffF1F5FB),
       hintColor: isDarkTheme ? Colors.grey.shade300 : Colors.grey.shade800,

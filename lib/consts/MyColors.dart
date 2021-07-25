@@ -7,6 +7,7 @@ class MyColors {
   static Color subTitle = Color(0xFF393236);
   static Color backgroundColor = Color(0xFF393236);
   static Color scaffoldDark = Color(0xFF181818);
+  static Color darkBackground = Color(0xFF1D1D21);
 
   //Icon Colors
   static Color favColor = Color(0xFFF44336);

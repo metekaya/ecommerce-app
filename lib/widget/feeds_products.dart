@@ -74,7 +74,7 @@ class _FeedsProductsState extends State<FeedsProducts> {
                   maxLines: 2,
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.black,
+                    color: Theme.of(context).textSelectionColor,
                   ),
                 ),
                 Padding(
@@ -83,7 +83,7 @@ class _FeedsProductsState extends State<FeedsProducts> {
                     '₺159',
                     style: TextStyle(
                         fontSize: 18,
-                        color: Colors.black,
+                        color: MyColors.accentColor,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
