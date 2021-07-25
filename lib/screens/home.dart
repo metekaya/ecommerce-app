@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:intern_app/widget/category.dart';
+import 'package:intern_app/widget/popular_products.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -125,7 +126,7 @@ class HomeScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        'Popüler Seçenekler',
+                        'Popüler Abonelikler',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -146,32 +147,68 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Center(
-                  child: Container(
-                    height: 210,
-                    width: MediaQuery.of(context).size.width * 0.90,
-                    child: Swiper(
-                      layout: SwiperLayout.DEFAULT,
-                      itemCount: _membershipItems.length,
-                      viewportFraction: 0.65,
-                      scale: 0.8,
-                      autoplay: true,
-                      curve: Curves.decelerate,
-                      duration: 1000,
-                      onTap: (index) {},
-                      itemBuilder: (BuildContext ctx, int index) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Container(
-                            color: Colors.grey.withOpacity(0.2),
-                            child: Image.network(
-                              _membershipItems[index],
-                              fit: BoxFit.fitHeight,
-                            ),
+                Container(
+                  height: 210,
+                  width: MediaQuery.of(context).size.width * 0.90,
+                  child: Swiper(
+                    layout: SwiperLayout.DEFAULT,
+                    itemCount: _membershipItems.length,
+                    viewportFraction: 0.65,
+                    scale: 0.8,
+                    autoplay: true,
+                    curve: Curves.decelerate,
+                    duration: 1000,
+                    onTap: (index) {},
+                    itemBuilder: (BuildContext ctx, int index) {
+                      return ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Container(
+                          color: Colors.grey.withOpacity(0.2),
+                          child: Image.network(
+                            _membershipItems[index],
+                            fit: BoxFit.fitHeight,
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Popüler Ürünler',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      Spacer(),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Devamını gör...',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 285,
+                  margin: EdgeInsets.symmetric(horizontal: 8),
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 8,
+                    itemBuilder: (BuildContext ctx, int index) {
+                      return PopularProducts();
+                    },
                   ),
                 ),
               ],
