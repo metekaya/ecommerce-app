@@ -5,6 +5,7 @@ import 'package:intern_app/widget/empty_cart.dart';
 import 'package:ionicons/ionicons.dart';
 
 class CartScreen extends StatelessWidget {
+  static const routeName = '/CartScreen';
   @override
   Widget build(BuildContext context) {
     List products = [];

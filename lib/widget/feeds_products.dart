@@ -1,8 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
-import 'package:intern_app/main.dart';
-import 'package:ionicons/ionicons.dart';
 
 class FeedsProducts extends StatefulWidget {
   @override
@@ -20,7 +18,7 @@ class _FeedsProductsState extends State<FeedsProducts> {
           borderRadius: BorderRadius.circular(6),
           color: Theme.of(context).backgroundColor),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Stack(
             children: [
@@ -66,7 +64,7 @@ class _FeedsProductsState extends State<FeedsProducts> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 4,
+                  height: 3,
                 ),
                 Text(
                   'Premium Otopark Üyeliği',

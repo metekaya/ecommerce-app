@@ -3,6 +3,7 @@ import 'package:carousel_pro_nullsafety/carousel_pro_nullsafety.dart';
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
+import 'package:intern_app/widget/backlayer.dart';
 import 'package:intern_app/widget/category.dart';
 import 'package:intern_app/widget/popular_products.dart';
 
@@ -10,7 +11,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List _carouselItems = [
-      'https://lh3.googleusercontent.com/proxy/mYxSYu8kJULBWEdwyfpSTt89DkyW_FrWGW4RqtsXOvZKTY-huZk4wUeyy2v6tY_ER2_9DcNpLl45VhDH10seHIgT4FzH9w',
+      '/images/carousel1.png',
       'https://media.istockphoto.com/vectors/parking-lot-with-two-cars-on-city-background-vector-id1151016425?k=6&m=1151016425&s=612x612&w=0&h=jMdRBZulzerQgNhzsuZlmXNek6v4d_sOQpHk8yN55eI=',
       'https://wwwi.globalpiyasa.com/lib/Urun/670/25c91b269169f3159e5e2056b87f6530_1.jpg',
       'https://i.pinimg.com/originals/35/a3/01/35a301ff7eedf9a1277fe6d2d26ef02d.jpg',
@@ -59,9 +60,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ],
           ),
-          backLayer: Center(
-            child: Text("Back Layer"),
-          ),
+          backLayer: BackLayerMenu(),
           frontLayer: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                   width: double.infinity,
                   child: Carousel(
                     images: [
-                      new Image.network(
+                      new Image.asset(
                         _carouselItems[0],
                       ),
                       new Image.network(
@@ -149,7 +148,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Container(
                   height: 210,
-                  width: MediaQuery.of(context).size.width * 0.90,
+                  width: double.infinity,
                   child: Swiper(
                     layout: SwiperLayout.DEFAULT,
                     itemCount: _membershipItems.length,

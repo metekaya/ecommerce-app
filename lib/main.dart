@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intern_app/consts/dark_theme_colors.dart';
 import 'package:intern_app/provider/dark_theme_provider.dart';
 import 'package:intern_app/screens/bottom_bar.dart';
+import 'package:intern_app/screens/cart.dart';
+import 'package:intern_app/screens/feeds.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -44,6 +46,11 @@ class _MyAppState extends State<MyApp> {
             title: 'Intern App',
             theme: Styles.themeData(themeChangeProvider.darkTheme, context),
             home: BottomBarScreen(),
+            routes: {
+              CartScreen.routeName: (ctx) => CartScreen(),
+              FeedsScreen.routeName: (ctx) => FeedsScreen(),
+              // WishlistScreen.routeName: (ctx) => WishlistScreen(),
+            },
           );
         },
       ),
