@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
 import 'package:intern_app/screens/cart.dart';
 import 'package:intern_app/screens/feeds.dart';
+import 'package:intern_app/screens/wishlist.dart';
 import 'package:ionicons/ionicons.dart';
 
 class BackLayerMenu extends StatelessWidget {
@@ -133,11 +134,11 @@ class BackLayerMenu extends StatelessWidget {
                   navigateTo(context, FeedsScreen.routeName);
                 }, 'Ürünleri Keşfet', Ionicons.compass_outline),
                 backlayerContent(context, () {
-                  navigateTo(context, FeedsScreen.routeName);
+                  navigateTo(context, WishlistScreen.routeName);
                 }, 'İstek Listem', Ionicons.heart_outline),
                 backlayerContent(context, () {
                   navigateTo(context, CartScreen.routeName);
-                }, 'Sepetim', Ionicons.bag_outline),
+                }, 'Sepetim', Ionicons.cart_outline),
                 backlayerContent(context, () {
                   navigateTo(context, FeedsScreen.routeName);
                 }, 'Yeni bir ürün ekle', Ionicons.cloud_upload_outline),

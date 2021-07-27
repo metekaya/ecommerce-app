@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
 import 'package:intern_app/provider/dark_theme_provider.dart';
+import 'package:intern_app/screens/cart.dart';
+import 'package:intern_app/screens/wishlist.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
 import 'package:provider/provider.dart';
@@ -119,6 +121,60 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 8, top: 8),
+                      child: screenTitle('Kullanıcı Sepeti', 23),
+                    ),
+                    Divider(
+                      thickness: 1,
+                      color: Colors.grey,
+                    ),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        splashColor: Theme.of(context).splashColor,
+                        child: ListTile(
+                          onTap: () => Navigator.of(context).pushNamed(
+                            WishlistScreen.routeName,
+                          ),
+                          title: Text(
+                            'İstek Listem',
+                            style: TextStyle(color: MyColors.favColor),
+                          ),
+                          leading: Icon(
+                            Ionicons.heart_circle_outline,
+                            color: MyColors.favColor,
+                          ),
+                          trailing: Icon(
+                            Ionicons.chevron_forward_outline,
+                            color: MyColors.favColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        splashColor: Theme.of(context).splashColor,
+                        child: ListTile(
+                          onTap: () => Navigator.of(context).pushNamed(
+                            CartScreen.routeName,
+                          ),
+                          title: Text(
+                            'Sepetim',
+                            style: TextStyle(color: MyColors.mainColor),
+                          ),
+                          leading: Icon(
+                            Ionicons.cart_outline,
+                            color: MyColors.mainColor,
+                          ),
+                          trailing: Icon(
+                            Ionicons.chevron_forward_outline,
+                            color: MyColors.mainColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8, top: 8),
                       child: screenTitle('Kullanıcı Detayları', 23),
                     ),
                     Divider(
@@ -169,7 +225,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
 
   Widget _buildFab() {
     // fab pozisyonunu başlatıyoruz
-    final double defaultTopMargin = 310.0 - 6.0;
+    final double defaultTopMargin = 285.0 - 6.0;
     // yeniden boyutlandırmadaki yukarıdan çizilecek pixellerin başlaması gereken nokta
     final double scaleStart = 200.0;
     // yeniden boyutlandırmadaki yukarıdan çizilecek pixellerin bitmesi gereken nokta
