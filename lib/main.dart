@@ -4,6 +4,7 @@ import 'package:intern_app/provider/dark_theme_provider.dart';
 import 'package:intern_app/screens/bottom_bar.dart';
 import 'package:intern_app/screens/cart.dart';
 import 'package:intern_app/screens/feeds.dart';
+import 'package:intern_app/screens/product_details.dart';
 import 'package:intern_app/screens/wishlist.dart';
 import 'package:provider/provider.dart';
 
@@ -51,6 +52,7 @@ class _MyAppState extends State<MyApp> {
               CartScreen.routeName: (ctx) => CartScreen(),
               FeedsScreen.routeName: (ctx) => FeedsScreen(),
               WishlistScreen.routeName: (ctx) => WishlistScreen(),
+              ProductDetailsScreen.routeName: (ctx) => ProductDetailsScreen(),
             },
           );
         },

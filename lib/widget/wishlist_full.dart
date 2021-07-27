@@ -15,7 +15,7 @@ class _WishlistFullState extends State<WishlistFull> {
     return Stack(
       children: [
         Container(
-          //height: MediaQuery.of(context).size.height * 0.20,
+          height: MediaQuery.of(context).size.height * 0.20,
           width: double.infinity,
           margin: EdgeInsets.only(
             left: 10,
@@ -34,8 +34,11 @@ class _WishlistFullState extends State<WishlistFull> {
                 child: Row(
                   children: [
                     Container(
-                      height: 80,
-                      child: Image.asset('/images/3d-printer.png'),
+                      height: 120,
+                      child: Image.network(
+                        'https://productimages.hepsiburada.net/s/86/375/110000028286524.jpg',
+                        fit: BoxFit.cover,
+                      ),
                     ),
                     SizedBox(
                       width: 10,
@@ -45,7 +48,7 @@ class _WishlistFullState extends State<WishlistFull> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'BenMaker 3D Yazıcı',
+                            'Playstation 5',
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
@@ -53,7 +56,7 @@ class _WishlistFullState extends State<WishlistFull> {
                             height: 20,
                           ),
                           Text(
-                            '₺9500',
+                            '₺7800',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
