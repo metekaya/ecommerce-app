@@ -1,4 +1,6 @@
-class Product {
+import 'package:flutter/cupertino.dart';
+
+class Product with ChangeNotifier {
   Product(
       this.id,
       this.title,

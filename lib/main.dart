@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/dark_theme_colors.dart';
 import 'package:intern_app/provider/dark_theme_provider.dart';
+import 'package:intern_app/provider/products.dart';
 import 'package:intern_app/screens/bottom_bar.dart';
 import 'package:intern_app/screens/cart.dart';
 import 'package:intern_app/screens/feeds.dart';
@@ -39,6 +40,9 @@ class _MyAppState extends State<MyApp> {
           create: (_) {
             return themeChangeProvider;
           },
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Products(),
         ),
       ],
       child: Consumer<DarkThemeProvider>(
