@@ -105,7 +105,7 @@ class FeedsScreen extends StatelessWidget {
       // ), //ASİMETRİK GRIDVIEW
       body: GridView.count(
         crossAxisCount: 2,
-        childAspectRatio: 240 / 400,
+        childAspectRatio: 240 / 420,
         children: List.generate(
           _products.length,
           (index) {
