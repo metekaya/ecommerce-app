@@ -8,6 +8,7 @@ class FeedsProducts extends StatefulWidget {
   const FeedsProducts(
       {Key? key,
       required this.id,
+      required this.title,
       required this.desc,
       required this.price,
       required this.imageUrl,
@@ -15,6 +16,7 @@ class FeedsProducts extends StatefulWidget {
       required this.isFavorite})
       : super(key: key);
   final String id;
+  final String title;
   final String desc;
   final double price;
   final String imageUrl;
@@ -86,7 +88,7 @@ class _FeedsProductsState extends State<FeedsProducts> {
                     height: 3,
                   ),
                   Text(
-                    'Premium Otopark Üyeliği',
+                    widget.title,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: TextStyle(
@@ -97,7 +99,7 @@ class _FeedsProductsState extends State<FeedsProducts> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     child: Text(
-                      '₺159',
+                      '₺${widget.price}',
                       style: TextStyle(
                           fontSize: 18,
                           color: MyColors.accentColor,
@@ -108,7 +110,7 @@ class _FeedsProductsState extends State<FeedsProducts> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Adet: Sınırsız',
+                        'Adet: ${widget.quantity}',
                         style: TextStyle(
                           fontSize: 13,
                           color: Colors.grey,

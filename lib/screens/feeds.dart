@@ -111,6 +111,7 @@ class FeedsScreen extends StatelessWidget {
           (index) {
             return FeedsProducts(
               id: _products[index].id,
+              title: _products[index].title,
               desc: _products[index].desc,
               price: _products[index].price,
               imageUrl: _products[index].imageUrl,
