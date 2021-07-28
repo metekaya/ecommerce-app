@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
 import 'package:ionicons/ionicons.dart';
 
-class Product extends StatelessWidget {
+class ProductDesign extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProductImages();

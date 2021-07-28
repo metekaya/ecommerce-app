@@ -1,9 +1,26 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
+import 'package:intern_app/models/product.dart';
 import 'package:intern_app/screens/product_details.dart';
 
 class FeedsProducts extends StatefulWidget {
+  const FeedsProducts(
+      {Key? key,
+      required this.id,
+      required this.desc,
+      required this.price,
+      required this.imageUrl,
+      required this.quantity,
+      required this.isFavorite})
+      : super(key: key);
+  final String id;
+  final String desc;
+  final double price;
+  final String imageUrl;
+  final int quantity;
+  final bool isFavorite;
+
   @override
   _FeedsProductsState createState() => _FeedsProductsState();
 }
@@ -34,8 +51,7 @@ class _FeedsProductsState extends State<FeedsProducts> {
                       maxHeight: MediaQuery.of(context).size.height * 0.27,
                     ),
                     child: Image(
-                      image: NetworkImage(
-                          'https://media.istockphoto.com/photos/premium-membership-gold-badge-picture-id530649463?k=6&m=530649463&s=170667a&w=0&h=CgsOLtH70dsBvDMBr8ZEPzBQ1qRP0VyrOcyADIKu6oo='),
+                      image: NetworkImage(widget.imageUrl),
                       fit: BoxFit.fitHeight,
                     ),
                   ),

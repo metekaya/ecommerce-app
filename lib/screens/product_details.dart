@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
-import 'package:intern_app/widget/product.dart';
+import 'package:intern_app/widget/product_design.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   static const routeName = '/ProductDetails';
@@ -14,7 +14,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomSheet: checkOutSection(context),
-      body: Product(),
+      body: ProductDesign(),
       backgroundColor: Color(0xFFF5F6F9),
       appBar: AppBar(
         flexibleSpace: Container(
