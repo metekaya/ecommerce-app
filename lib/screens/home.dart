@@ -3,13 +3,17 @@ import 'package:carousel_pro_nullsafety/carousel_pro_nullsafety.dart';
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
+import 'package:intern_app/provider/products.dart';
 import 'package:intern_app/widget/backlayer.dart';
 import 'package:intern_app/widget/category.dart';
 import 'package:intern_app/widget/popular_products.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final productsData = Provider.of<Products>(context);
+    final popularItems = productsData.popularProducts;
     List _carouselItems = [
       '/images/carousel1.png',
       'https://media.istockphoto.com/vectors/parking-lot-with-two-cars-on-city-background-vector-id1151016425?k=6&m=1151016425&s=612x612&w=0&h=jMdRBZulzerQgNhzsuZlmXNek6v4d_sOQpHk8yN55eI=',
@@ -125,7 +129,7 @@ class HomeScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        'Popüler Abonelikler',
+                        'Popüler Ürünler',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -204,9 +208,17 @@ class HomeScreen extends StatelessWidget {
                   margin: EdgeInsets.symmetric(horizontal: 8),
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: 8,
+                    itemCount: popularItems.length,
                     itemBuilder: (BuildContext ctx, int index) {
-                      return PopularProducts();
+                      return ChangeNotifierProvider.value(
+                        value: popularItems[index],
+                        child: PopularProducts(
+                            // imageUrl: popularItems[index].imageUrl,
+                            // title: popularItems[index].title,
+                            // desc: popularItems[index].desc,
+                            // price: popularItems[index].price,
+                            ),
+                      );
                     },
                   ),
                 ),

@@ -15,7 +15,11 @@ class _FeedsProductsState extends State<FeedsProducts> {
   Widget build(BuildContext context) {
     final productsAttributes = Provider.of<Product>(context);
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, ProductDetailsScreen.routeName),
+      onTap: () => Navigator.pushNamed(
+        context,
+        ProductDetailsScreen.routeName,
+        arguments: productsAttributes.id,
+      ),
       child: Container(
         margin: EdgeInsets.all(10),
         height: MediaQuery.of(context).size.height * 0.42,

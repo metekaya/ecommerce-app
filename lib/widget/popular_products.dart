@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
+import 'package:intern_app/models/product.dart';
+import 'package:intern_app/screens/product_details.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
 
 class PopularProducts extends StatelessWidget {
+  // final String imageUrl;
+  // final String title;
+  // final String desc;
+  // final double price;
+
+  // const PopularProducts(
+  //     {Key? key,
+  //     required this.imageUrl,
+  //     required this.title,
+  //     required this.desc,
+  //     required this.price})
+  //     : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    final productsAttributes = Provider.of<Product>(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       width: 260,
@@ -23,7 +40,11 @@ class PopularProducts extends StatelessWidget {
         ),
         // color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: () => Navigator.pushNamed(
+            context,
+            ProductDetailsScreen.routeName,
+            arguments: productsAttributes.id,
+          ),
           child: Column(
             children: [
               Stack(
@@ -32,8 +53,7 @@ class PopularProducts extends StatelessWidget {
                     height: 200,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(
-                            'https://image.flaticon.com/icons/png/512/3967/3967606.png'),
+                        image: NetworkImage(productsAttributes.imageUrl),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -59,7 +79,7 @@ class PopularProducts extends StatelessWidget {
                       padding: EdgeInsets.all(10),
                       color: Theme.of(context).backgroundColor,
                       child: Text(
-                        '₺59.9',
+                        '₺${productsAttributes.price}',
                         style: TextStyle(
                           color: MyColors.accentColor,
                         ),
@@ -74,7 +94,7 @@ class PopularProducts extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      ('1 Yıllık Park Planı'),
+                      productsAttributes.title,
                       maxLines: 1,
                       style: TextStyle(
                         fontSize: 18,
@@ -83,26 +103,32 @@ class PopularProducts extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Text(
-                          '1 Yıl Boyunca Ücretsiz Park',
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey.shade500,
+                        Expanded(
+                          flex: 5,
+                          child: Text(
+                            productsAttributes.desc,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.grey.shade500,
+                            ),
                           ),
                         ),
                         Spacer(),
-                        Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            splashColor: Colors.orange,
-                            hoverColor: Colors.orange,
-                            onTap: () {},
-                            borderRadius: BorderRadius.circular(30),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: Icon(Ionicons.bag_add_outline),
+                        Expanded(
+                          flex: 1,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              splashColor: Colors.orange,
+                              hoverColor: Colors.orange,
+                              onTap: () {},
+                              borderRadius: BorderRadius.circular(30),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Icon(Ionicons.bag_add_outline),
+                              ),
                             ),
                           ),
                         )

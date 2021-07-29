@@ -24,7 +24,7 @@ class Products with ChangeNotifier {
       'Yazıcılar',
       'LABISTS',
       false,
-      false,
+      true,
       12,
     ),
     Product(
@@ -36,7 +36,7 @@ class Products with ChangeNotifier {
       'Oyun Konsolları',
       'Sony',
       false,
-      false,
+      true,
       5,
     ),
     Product(
@@ -84,12 +84,20 @@ class Products with ChangeNotifier {
       'Kulaklıklar',
       'Apple',
       false,
-      false,
+      true,
       45,
     ),
   ];
 
   List<Product> get products {
     return _products;
+  }
+
+  List<Product> get popularProducts {
+    return _products.where((element) => element.isPopular).toList();
+  }
+
+  Product findById(String productId) {
+    return _products.firstWhere((element) => element.id == productId);
   }
 }

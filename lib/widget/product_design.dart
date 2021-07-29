@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
+import 'package:intern_app/provider/products.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
 
 class ProductDesign extends StatelessWidget {
   @override
@@ -15,15 +17,20 @@ class ProductImages extends StatefulWidget {
 }
 
 class _ProductImagesState extends State<ProductImages> {
-  int _selectedImage = 0;
-  List _productImages = [
-    'images/ps5-console.png',
-    'images/ps5-console2.png',
-    'images/ps5-console3.png',
-  ];
+  // int _selectedImage = 0;
+  // List _productImages = [
+  //   'images/ps5-console1.png',
+  //   'images/ps5-console2.png',
+  //   'images/ps5-console3.png',
+  // ];
 
   @override
   Widget build(BuildContext context) {
+    final productsData = Provider.of<Products>(context);
+    final prId = ModalRoute.of(context);
+    if (prId == null) return SizedBox.shrink();
+    final productId = prId.settings.arguments as String;
+    final prodAttr = productsData.findById(productId);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -34,18 +41,9 @@ class _ProductImagesState extends State<ProductImages> {
               height: MediaQuery.of(context).size.height * 0.4,
               child: AspectRatio(
                 aspectRatio: 1,
-                child: Image.asset(_productImages[_selectedImage]),
+                child: Image.network(prodAttr.imageUrl),
               ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ...List.generate(
-                _productImages.length,
-                (index) => buildSmallPreview(index),
-              ),
-            ],
           ),
           RoundedContainer(
             color: Colors.white,
@@ -55,8 +53,21 @@ class _ProductImagesState extends State<ProductImages> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
-                    'Playstation 5™ Oyun Konsolu',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    prodAttr.title,
+                    style: TextStyle(
+                        color: Theme.of(context).textSelectionColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5, left: 20, right: 20),
+                  child: Text(
+                    '₺${prodAttr.price}',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: MyColors.accentColor),
                   ),
                 ),
                 Align(
@@ -88,18 +99,37 @@ class _ProductImagesState extends State<ProductImages> {
                     ),
                   ),
                 ),
-                SingleChildScrollView(
-                  child: Container(
-                    width: double.infinity,
-                    height: 50,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Playstation 5 açıklaması, konsol uygulaması, devam eden satırlar.',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 3,
-                        style: TextStyle(fontSize: 14),
-                      ),
+                ProductInfoRow(
+                  'Marka: ',
+                  prodAttr.brand,
+                  Theme.of(context).textSelectionColor,
+                ),
+                ProductInfoRow(
+                  'Kategori: ',
+                  prodAttr.productCategoryName,
+                  Theme.of(context).textSelectionColor,
+                ),
+                ProductInfoRow(
+                  'Stok: ',
+                  '${prodAttr.quantity.toString()} adet kaldı.',
+                  Theme.of(context).textSelectionColor,
+                ),
+                ProductInfoRow(
+                  'Popülerlik: ',
+                  prodAttr.isPopular ? 'En çok ziyaret edilen.' : 'Popüler',
+                  Theme.of(context).textSelectionColor,
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 15),
+                  width: double.infinity,
+                  height: 50,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      prodAttr.desc,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 3,
+                      style: TextStyle(fontSize: 15),
                     ),
                   ),
                 ),
@@ -130,30 +160,31 @@ class _ProductImagesState extends State<ProductImages> {
       ),
     );
   }
+}
 
-  Widget buildSmallPreview(int index) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedImage = index;
-        });
-      },
-      child: Container(
-        margin: EdgeInsets.only(right: 15, top: 15),
-        padding: EdgeInsets.all(8),
-        height: 50,
-        width: 50,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: _selectedImage == index ? MyColors.mainColor : Colors.white,
+Widget ProductInfoRow(String title, String titleDesc, Color color) {
+  return Padding(
+    padding: const EdgeInsets.only(top: 5, left: 20, right: 20),
+    child: Row(
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: color,
           ),
         ),
-        child: Image.asset(_productImages[index]),
-      ),
-    );
-  }
+        Text(
+          titleDesc,
+          style: TextStyle(
+            fontSize: 16,
+            color: color,
+          ),
+        ),
+      ],
+    ),
+  );
 }
 
 class RoundedContainer extends StatelessWidget {

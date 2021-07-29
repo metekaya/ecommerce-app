@@ -10,7 +10,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List products = [];
     return Scaffold(
-      body: products.isEmpty
+      body: !products.isEmpty
           ? Scaffold(
               body: EmptyCart(),
             )
