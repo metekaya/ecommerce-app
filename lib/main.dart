@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/dark_theme_colors.dart';
+import 'package:intern_app/provider/cart_provider.dart';
 import 'package:intern_app/provider/dark_theme_provider.dart';
 import 'package:intern_app/provider/products.dart';
 import 'package:intern_app/screens/bottom_bar.dart';
@@ -43,6 +44,9 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider(
           create: (_) => Products(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CartProvider(),
         ),
       ],
       child: Consumer<DarkThemeProvider>(

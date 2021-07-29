@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
+import 'package:intern_app/provider/cart_provider.dart';
 import 'package:intern_app/provider/products.dart';
 import 'package:intern_app/widget/product_design.dart';
 import 'package:provider/provider.dart';
@@ -77,6 +78,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   Widget checkOutButton(
       BuildContext context, String title, Color color, Color splashColor) {
+    final productsData = Provider.of<Products>(context);
+    final prId = ModalRoute.of(context);
+    if (prId == null) return SizedBox.shrink();
+    final productId = prId.settings.arguments as String;
+    final prodAttr = productsData.findById(productId);
+    final cartProvider = Provider.of<CartProvider>(context);
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
@@ -88,7 +95,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         borderRadius: BorderRadius.circular(30),
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: () => cartProvider.addProductToCart(
+            productId,
+            prodAttr.price,
+            prodAttr.title,
+            prodAttr.imageUrl,
+          ),
           splashColor: splashColor,
           borderRadius: BorderRadius.circular(30),
           child: Padding(
