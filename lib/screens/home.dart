@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:intern_app/provider/products.dart';
+import 'package:intern_app/screens/feeds.dart';
 import 'package:intern_app/widget/backlayer.dart';
 import 'package:intern_app/widget/category.dart';
 import 'package:intern_app/widget/popular_products.dart';
@@ -129,7 +130,7 @@ class HomeScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        'Popüler Ürünler',
+                        'Popüler Abonelikler',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -137,9 +138,11 @@ class HomeScreen extends StatelessWidget {
                       ),
                       Spacer(),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () => Navigator.pushNamed(
+                            context, FeedsScreen.routeName,
+                            arguments: ''),
                         child: Text(
-                          'Devamını gör...',
+                          'Tümünü gör...',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
@@ -189,7 +192,9 @@ class HomeScreen extends StatelessWidget {
                       ),
                       Spacer(),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () => Navigator.pushNamed(
+                            context, FeedsScreen.routeName,
+                            arguments: 'popular'),
                         child: Text(
                           'Devamını gör...',
                           style: TextStyle(

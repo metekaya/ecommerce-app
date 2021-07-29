@@ -14,6 +14,7 @@ class _FeedsProductsState extends State<FeedsProducts> {
   @override
   Widget build(BuildContext context) {
     final productsAttributes = Provider.of<Product>(context);
+
     return InkWell(
       onTap: () => Navigator.pushNamed(
         context,

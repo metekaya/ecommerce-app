@@ -10,7 +10,13 @@ class FeedsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productsProvider = Provider.of<Products>(context);
+    final popular = ModalRoute.of(context)!.settings.arguments as String;
     List<Product> productsList = productsProvider.products;
+
+    if (popular == 'popular') {
+      productsList = productsProvider.popularProducts;
+    }
+
     return Scaffold(
       // body: StaggeredGridView.countBuilder(
       //   crossAxisCount: 6,
