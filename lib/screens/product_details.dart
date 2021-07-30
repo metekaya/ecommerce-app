@@ -78,7 +78,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   Widget checkOutButton(
       BuildContext context, String title, Color color, Color splashColor) {
-    final productsData = Provider.of<Products>(context);
+    final productsData = Provider.of<Products>(context, listen: false);
     final prId = ModalRoute.of(context);
     if (prId == null) return SizedBox.shrink();
     final productId = prId.settings.arguments as String;

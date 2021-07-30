@@ -12,14 +12,18 @@ class FeedsScreen extends StatelessWidget {
     // final routeArgs = ModalRoute.of(context);
     // if (routeArgs == null) return SizedBox.shrink();
     // final popular = routeArgs.settings.arguments as String;
-    final popular = ModalRoute.of(context)!.settings.arguments as String;
+
     final productsProvider = Provider.of<Products>(context);
     List<Product> productsList = productsProvider.products;
-    if (popular == 'popular') {
-      productsList = productsProvider.popularProducts;
-    } else {
-      productsList = productsProvider.products;
-    }
+
+    // Sadece popüler ürünleri göstermek istediğimiz de bu kısmı aktifleştiriyoruz.
+
+    // final popular = ModalRoute.of(context)!.settings.arguments as String;
+    // if (popular == 'popular') {
+    //   productsList = productsProvider.popularProducts;
+    // } else {
+    //   productsList = productsProvider.products;
+    // }
 
     return Scaffold(
       body: GridView.count(

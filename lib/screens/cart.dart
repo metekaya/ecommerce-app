@@ -12,33 +12,35 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
 
-    return Scaffold(
-      body: cartProvider.getCartItems.isEmpty
-          ? Scaffold(
-              body: EmptyCart(),
-            )
-          : Scaffold(
-              bottomSheet: checkOutSection(context),
-              appBar: AppBar(
-                title: Text('Sepetteki Ürünler'),
-                actions: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Ionicons.trash_bin_outline),
-                  ),
-                ],
-              ),
-              body: Container(
-                margin: EdgeInsets.only(bottom: 60),
-                child: ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: (BuildContext ctx, int index) {
-                    return CartFull();
-                  },
+    return cartProvider.getCartItems.isEmpty
+        ? Scaffold(
+            body: EmptyCart(),
+          )
+        : Scaffold(
+            bottomSheet: checkOutSection(context),
+            appBar: AppBar(
+              title: Text('Sepetteki Ürünler'),
+              actions: [
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Ionicons.trash_bin_outline),
                 ),
+              ],
+            ),
+            body: Container(
+              margin: EdgeInsets.only(bottom: 60),
+              child: ListView.builder(
+                itemCount: cartProvider.getCartItems.length,
+                itemBuilder: (BuildContext ctx, int index) {
+                  return ChangeNotifierProvider.value(
+                    value: cartProvider.getCartItems.values.toList()[index],
+                    child: CartFull(
+                        cartProvider.getCartItems.keys.toList()[index]),
+                  );
+                },
               ),
             ),
-    );
+          );
   }
 
   Widget checkOutSection(BuildContext context) {

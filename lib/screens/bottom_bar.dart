@@ -23,7 +23,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
     _pages = [
       HomeScreen(),
       FeedsScreen(),
-      Navigator.pushNamed(context, FeedsScreen.routeName, arguments: ''),
+      SearchScreen(),
       CartScreen(),
       UserInfoScreen(),
     ];

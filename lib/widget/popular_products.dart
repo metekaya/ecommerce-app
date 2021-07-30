@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
 import 'package:intern_app/models/product.dart';
+import 'package:intern_app/provider/cart_provider.dart';
 import 'package:intern_app/screens/product_details.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,7 @@ class PopularProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productsAttributes = Provider.of<Product>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       width: 260,
@@ -104,7 +106,7 @@ class PopularProducts extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          flex: 5,
+                          flex: 6,
                           child: Text(
                             productsAttributes.desc,
                             maxLines: 2,
@@ -116,18 +118,25 @@ class PopularProducts extends StatelessWidget {
                           ),
                         ),
                         Spacer(),
-                        Expanded(
-                          flex: 1,
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              splashColor: Colors.orange,
-                              hoverColor: Colors.orange,
-                              onTap: () {},
-                              borderRadius: BorderRadius.circular(30),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: Icon(Ionicons.bag_add_outline),
+                        Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            splashColor: Colors.orange,
+                            hoverColor: Colors.orange,
+                            onTap: () => cartProvider.addProductToCart(
+                              productsAttributes.id,
+                              productsAttributes.price,
+                              productsAttributes.title,
+                              productsAttributes.imageUrl,
+                            ),
+                            borderRadius: BorderRadius.circular(30),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Icon(
+                                cartProvider.getCartItems
+                                        .containsKey(productsAttributes.id)
+                                    ? Ionicons.checkmark_done_outline
+                                    : Ionicons.bag_add_outline,
                               ),
                             ),
                           ),

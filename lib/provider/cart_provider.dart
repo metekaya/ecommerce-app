@@ -24,7 +24,7 @@ class CartProvider with ChangeNotifier {
         (existingCartItem) => CartAttr(
           existingCartItem.id,
           existingCartItem.title,
-          existingCartItem.quantity,
+          existingCartItem.quantity + 1,
           existingCartItem.price,
           existingCartItem.imageUrl,
         ),

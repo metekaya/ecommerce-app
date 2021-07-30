@@ -138,9 +138,8 @@ class HomeScreen extends StatelessWidget {
                       ),
                       Spacer(),
                       TextButton(
-                        onPressed: () => Navigator.pushNamed(
-                            context, FeedsScreen.routeName,
-                            arguments: ''),
+                        onPressed: () =>
+                            Navigator.pushNamed(context, FeedsScreen.routeName),
                         child: Text(
                           'Tümünü gör...',
                           style: TextStyle(
@@ -192,9 +191,8 @@ class HomeScreen extends StatelessWidget {
                       ),
                       Spacer(),
                       TextButton(
-                        onPressed: () => Navigator.pushNamed(
-                            context, FeedsScreen.routeName,
-                            arguments: 'popular'),
+                        onPressed: () =>
+                            Navigator.pushNamed(context, FeedsScreen.routeName),
                         child: Text(
                           'Devamını gör...',
                           style: TextStyle(
