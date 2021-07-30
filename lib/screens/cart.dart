@@ -19,10 +19,22 @@ class CartScreen extends StatelessWidget {
         : Scaffold(
             bottomSheet: checkOutSection(context),
             appBar: AppBar(
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      MyColors.homeGradientStart,
+                      MyColors.homeGradientEnd,
+                    ],
+                  ),
+                ),
+              ),
               title: Text('Sepetteki Ürünler'),
               actions: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    cartProvider.clearCart();
+                  },
                   icon: Icon(Ionicons.trash_bin_outline),
                 ),
               ],
@@ -44,6 +56,7 @@ class CartScreen extends StatelessWidget {
   }
 
   Widget checkOutSection(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
     return Container(
       decoration: BoxDecoration(
         border: Border(
@@ -97,7 +110,7 @@ class CartScreen extends StatelessWidget {
               ),
             ),
             Text(
-              'TRY ₺9500',
+              'TRY ₺${cartProvider.totalAmount.toString()}',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

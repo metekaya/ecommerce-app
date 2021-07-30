@@ -16,6 +16,23 @@ class CartProvider with ChangeNotifier {
     return total;
   }
 
+  void removeItemFromCart(
+      String productId, double price, String title, String imageUrl) {
+    if (_cartItems.containsKey(productId)) {
+      _cartItems.update(
+        productId,
+        (existingCartItem) => CartAttr(
+          existingCartItem.id,
+          existingCartItem.title,
+          existingCartItem.quantity - 1,
+          existingCartItem.price,
+          existingCartItem.imageUrl,
+        ),
+      );
+    }
+    notifyListeners();
+  }
+
   void addProductToCart(
       String productId, double price, String title, String imageUrl) {
     if (_cartItems.containsKey(productId)) {
@@ -41,6 +58,16 @@ class CartProvider with ChangeNotifier {
         ),
       );
     }
+    notifyListeners();
+  }
+
+  void deleteProduct(String productId) {
+    _cartItems.remove(productId);
+    notifyListeners();
+  }
+
+  void clearCart() {
+    _cartItems.clear();
     notifyListeners();
   }
 }

@@ -37,6 +37,7 @@ class _CartFullState extends State<CartFull> {
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
     final cartAttr = Provider.of<CartAttr>(context);
     final double subtotal = cartAttr.price * cartAttr.quantity;
     return InkWell(
@@ -87,7 +88,9 @@ class _CartFullState extends State<CartFull> {
                         child: InkWell(
                           splashColor: Colors.red.shade300,
                           borderRadius: BorderRadius.circular(18),
-                          onTap: () {},
+                          onTap: () {
+                            cartProvider.deleteProduct(widget.productId);
+                          },
                           highlightColor: Colors.red.shade200,
                           hoverColor: Colors.red.shade200,
                           child: Container(
@@ -160,7 +163,15 @@ class _CartFullState extends State<CartFull> {
                         child: InkWell(
                           splashColor: Colors.red.shade300,
                           borderRadius: BorderRadius.circular(11),
-                          onTap: () {},
+                          onTap: cartAttr.quantity < 2
+                              ? null
+                              : () {
+                                  cartProvider.removeItemFromCart(
+                                      widget.productId,
+                                      cartAttr.price,
+                                      cartAttr.title,
+                                      cartAttr.imageUrl);
+                                },
                           highlightColor: Colors.red.shade200,
                           hoverColor: Colors.red.shade200,
                           child: Container(
@@ -168,7 +179,9 @@ class _CartFullState extends State<CartFull> {
                               padding: const EdgeInsets.only(right: 5),
                               child: Icon(
                                 Ionicons.remove_circle_outline,
-                                color: Colors.red,
+                                color: cartAttr.quantity < 2
+                                    ? Colors.grey
+                                    : Colors.red,
                                 size: 22,
                               ),
                             ),
@@ -216,7 +229,14 @@ class _CartFullState extends State<CartFull> {
                         child: InkWell(
                           splashColor: Colors.green.shade300,
                           borderRadius: BorderRadius.circular(11),
-                          onTap: () {},
+                          onTap: () {
+                            cartProvider.addProductToCart(
+                              widget.productId,
+                              cartAttr.price,
+                              cartAttr.title,
+                              cartAttr.imageUrl,
+                            );
+                          },
                           highlightColor: Colors.green.shade200,
                           hoverColor: Colors.green.shade200,
                           child: Container(
