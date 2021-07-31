@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intern_app/consts/MyColors.dart';
+import 'package:ionicons/ionicons.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
@@ -8,7 +10,38 @@ class LandingPage extends StatefulWidget {
   _LandingPageState createState() => _LandingPageState();
 }
 
-class _LandingPageState extends State<LandingPage> {
+class _LandingPageState extends State<LandingPage>
+    with TickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 20),
+    );
+    _animation =
+        CurvedAnimation(parent: _animationController, curve: Curves.linear)
+          ..addListener(() {
+            setState(() {});
+          })
+          ..addStatusListener((animationStatus) {
+            if (animationStatus == AnimationStatus.completed) {
+              _animationController.reset();
+              _animationController.forward();
+            }
+          });
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,12 +50,13 @@ class _LandingPageState extends State<LandingPage> {
           CachedNetworkImage(
             imageUrl:
                 'https://media.istockphoto.com/photos/out-of-focus-office-open-corridor-background-picture-id472336288?k=6&m=472336288&s=612x612&w=0&h=3mqk3KJ7eOzXZfr-LlBMsr4EWd7-WpMzh3Xy2UY6niQ=',
-            placeholder: (context, url) => Image.network(
-              'https://st2.depositphotos.com/1407534/8617/i/600/depositphotos_86172184-stock-photo-blurred-office-background-office-worker.jpg',
-              fit: BoxFit.contain,
-            ),
+            // placeholder: (context, url) => Image.network(
+            //   'https://st2.depositphotos.com/1407534/8617/i/600/depositphotos_86172184-stock-photo-blurred-office-background-office-worker.jpg',
+            //   fit: BoxFit.cover,
+            // ),
             errorWidget: (context, url, error) => Icon(Icons.error),
-            fit: BoxFit.contain,
+            alignment: FractionalOffset(_animation.value, 0),
+            fit: BoxFit.cover,
             height: double.infinity,
             width: double.infinity,
           ),
@@ -33,7 +67,7 @@ class _LandingPageState extends State<LandingPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'welcome',
+                  'Kuartek Proje Tasarım',
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
@@ -45,11 +79,10 @@ class _LandingPageState extends State<LandingPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Text(
-                    'Welcome to the biggest store online',
+                    'En gözde proje tasarım firmasına hoş geldiniz',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 26,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 )
@@ -61,11 +94,28 @@ class _LandingPageState extends State<LandingPage> {
             children: [
               Row(
                 children: [
+                  SizedBox(
+                    width: 10,
+                  ),
                   Expanded(
                     child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          MyColors.mainColor,
+                        ),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            side: BorderSide(
+                              color: MyColors.mainColor,
+                            ),
+                          ),
+                        ),
+                      ),
                       onPressed: () {},
                       child: Text(
-                        'Login',
+                        'Giriş Yap',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
@@ -73,25 +123,116 @@ class _LandingPageState extends State<LandingPage> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    width: 10,
+                  ),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17,
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          MyColors.accentColor,
                         ),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            side: BorderSide(
+                              color: MyColors.accentColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Kayıt Ol',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Icon(
+                            Ionicons.person_add_outline,
+                            size: 18,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Divider(
+                        color: Colors.white,
+                        thickness: 2,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    'Veya şununla devam et',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Divider(
+                        color: Colors.white,
+                        thickness: 2,
                       ),
                     ),
                   ),
                 ],
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  OutlineButton(
+                    onPressed: () {},
+                    shape: StadiumBorder(),
+                    highlightedBorderColor: Colors.red.shade300,
+                    borderSide: BorderSide(
+                      width: 2,
+                      color: Colors.red,
+                    ),
+                    child: Text('Google +'),
+                  ),
+                  OutlineButton(
+                    onPressed: () {},
+                    shape: StadiumBorder(),
+                    highlightedBorderColor: Colors.green.shade300,
+                    borderSide: BorderSide(
+                      width: 2,
+                      color: MyColors.mainColor,
+                    ),
+                    child: Text('Üye Olmadan Devam Et'),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 40,
               )
             ],
           ),
         ],
       ),
-    ); //https://p4.wallpaperbetter.com/wallpaper/93/256/35/5bd058d572fd4-wallpaper-preview.jpg
-    // https://c4.wallpaperflare.com/wallpaper/1020/206/477/blur-car-lights-cars-celebration-wallpaper-preview.jpg
+    );
   }
 }
