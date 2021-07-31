@@ -6,6 +6,7 @@ import 'package:intern_app/provider/products.dart';
 import 'package:intern_app/screens/bottom_bar.dart';
 import 'package:intern_app/screens/cart.dart';
 import 'package:intern_app/screens/feeds.dart';
+import 'package:intern_app/screens/landing_page.dart';
 import 'package:intern_app/screens/product_details.dart';
 import 'package:intern_app/screens/wishlist.dart';
 import 'package:provider/provider.dart';
@@ -55,7 +56,7 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             title: 'Intern App',
             theme: Styles.themeData(themeChangeProvider.darkTheme, context),
-            home: BottomBarScreen(),
+            home: LandingPage(),
             routes: {
               CartScreen.routeName: (ctx) => CartScreen(),
               FeedsScreen.routeName: (ctx) => FeedsScreen(),

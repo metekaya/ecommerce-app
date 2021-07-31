@@ -37,6 +37,7 @@ dependencies:
   backdrop: ^0.6.2
   carousel_pro_nullsafety: ^1.0.2
   flutter_swiper_null_safety: ^1.0.2
+  cached_network_image: ^3.1.0
 
 dev_dependencies:
   flutter_test:
