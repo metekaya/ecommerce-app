@@ -13,10 +13,25 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final FocusNode _passwordFocusNode = FocusNode();
   String _emailAdress = '';
   String _password = '';
   bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
+  @override
+  void dispose() {
+    _passwordFocusNode.dispose();
+    super.dispose();
+  }
+
+  void _submitForm() {
+    final isValid = _formKey.currentState!.validate();
+    FocusScope.of(context).unfocus();
+    if (isValid) {
+      _formKey.currentState!.save();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,6 +99,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                           return null;
                         },
+                        textInputAction: TextInputAction.next,
+                        onEditingComplete: () => FocusScope.of(context)
+                            .requestFocus(_passwordFocusNode),
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           border: const UnderlineInputBorder(),
@@ -113,6 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                   keyboardType: TextInputType.emailAddress,
+                  focusNode: _passwordFocusNode,
                   decoration: InputDecoration(
                     border: const UnderlineInputBorder(),
                     filled: true,
@@ -133,6 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onSaved: (value) {
                     _password = value!;
                   },
+                  onEditingComplete: _submitForm,
                   obscureText: _obscureText,
                 ),
               ),
@@ -157,9 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, LoginScreen.routeName);
-                    },
+                    onPressed: _submitForm,
                     child: Text(
                       'Giriş Yap',
                       style: TextStyle(
