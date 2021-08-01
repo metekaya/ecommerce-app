@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
+import 'package:intern_app/screens/sign_up.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
@@ -299,7 +300,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: 10,
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () =>
+                          Navigator.pushNamed(context, SignUpScreen.routeName),
                       child: Text(
                         'Kayıt Ol',
                         style: TextStyle(

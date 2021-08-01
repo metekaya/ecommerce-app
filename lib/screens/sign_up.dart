@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
+import 'package:intern_app/screens/login.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
@@ -20,6 +23,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String _password = '';
   String _fullName = '';
   late int _phoneNumber;
+  File? _pickedImage;
   bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
   @override
@@ -78,6 +82,81 @@ class _SignUpScreenState extends State<SignUpScreen> {
               children: [
                 SizedBox(
                   height: 30,
+                ),
+                Stack(
+                  children: [
+                    Container(
+                      margin:
+                          EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                      child: CircleAvatar(
+                        radius: 71,
+                        backgroundColor: MyColors.accentColor,
+                        child: CircleAvatar(
+                          radius: 69,
+                          backgroundImage: _pickedImage == null
+                              ? null
+                              : FileImage(_pickedImage!),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 120,
+                      left: 110,
+                      child: RawMaterialButton(
+                        elevation: 10,
+                        fillColor: MyColors.accentColor,
+                        child: Icon(
+                          Ionicons.camera_outline,
+                          color: Colors.white,
+                        ),
+                        padding: EdgeInsets.all(15.0),
+                        shape: CircleBorder(),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'Seçenekler',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: MyColors.mainColor,
+                                    ),
+                                  ),
+                                ),
+                                content: SingleChildScrollView(
+                                  child: ListBody(
+                                    children: [
+                                      cameraListItems(
+                                          'Kamera',
+                                          Ionicons.camera_outline,
+                                          Colors.green,
+                                          Colors.black),
+                                      cameraListItems(
+                                        'Galeriden Seç',
+                                        Ionicons.image_outline,
+                                        Colors.green,
+                                        Colors.black,
+                                      ),
+                                      cameraListItems(
+                                        'Sil',
+                                        Ionicons.trash_outline,
+                                        Colors.red,
+                                        Colors.red,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
                 Form(
                   key: _formKey,
@@ -221,14 +300,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         fixedSize:
                             MaterialStateProperty.all<Size>(Size(150, 35)),
                         backgroundColor: MaterialStateProperty.all(
-                          MyColors.mainColor,
+                          MyColors.accentColor,
                         ),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                             side: BorderSide(
-                              color: MyColors.mainColor,
+                              color: MyColors.accentColor,
                             ),
                           ),
                         ),
@@ -248,111 +327,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: 100,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Divider(
-                          color: Colors.grey,
-                          thickness: 2,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      'Veya şununla devam et',
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Divider(
-                          color: Colors.grey,
-                          thickness: 2,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 30,
+                  height: 35,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    OutlineButton(
-                      onPressed: () {},
-                      shape: StadiumBorder(),
-                      highlightedBorderColor: Colors.red.shade300,
-                      borderSide: BorderSide(
-                        width: 1,
-                        color: Colors.red,
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Ionicons.logo_google,
-                            size: 16,
-                            color: Colors.red,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            'Google ',
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    OutlineButton(
-                      onPressed: () {},
-                      shape: StadiumBorder(),
-                      highlightedBorderColor: Colors.blue.shade300,
-                      borderSide: BorderSide(
-                        width: 1,
-                        color: Colors.blue.shade900,
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Ionicons.logo_facebook,
-                            size: 16,
-                            color: Colors.blue.shade900,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            'Facebook',
-                            style: TextStyle(
-                              color: Colors.blue.shade900,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Hesabın yok mu?'),
+                    Text('Zaten bir hesabın var mı?'),
                     SizedBox(
                       width: 10,
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () =>
+                          Navigator.pushNamed(context, LoginScreen.routeName),
                       child: Text(
-                        'Kayıt Ol',
+                        'Hemen Giriş Yap',
                         style: TextStyle(
                           color: MyColors.mainColor,
                         ),
@@ -367,6 +355,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget cameraListItems(
+      String title, IconData icon, Color color, Color textColor) {
+    return InkWell(
+      onTap: () {},
+      splashColor: MyColors.gradientFEnd,
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(
+              icon,
+              color: color,
+            ),
+          ),
+          Text(
+            title,
+            style: TextStyle(
+              color: textColor,
+            ),
+          ),
+        ],
       ),
     );
   }
