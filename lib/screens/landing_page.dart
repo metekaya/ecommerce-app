@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
+import 'package:intern_app/screens/login.dart';
 import 'package:ionicons/ionicons.dart';
 
 class LandingPage extends StatefulWidget {
@@ -113,7 +114,9 @@ class _LandingPageState extends State<LandingPage>
                           ),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, LoginScreen.routeName);
+                      },
                       child: Text(
                         'Giriş Yap',
                         style: TextStyle(
@@ -209,10 +212,25 @@ class _LandingPageState extends State<LandingPage>
                     shape: StadiumBorder(),
                     highlightedBorderColor: Colors.red.shade300,
                     borderSide: BorderSide(
-                      width: 2,
+                      width: 1,
                       color: Colors.red,
                     ),
-                    child: Text('Google +'),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Ionicons.logo_google,
+                          size: 16,
+                          color: Colors.red,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          'Google ',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ],
+                    ),
                   ),
                   OutlineButton(
                     onPressed: () {},
@@ -222,7 +240,10 @@ class _LandingPageState extends State<LandingPage>
                       width: 2,
                       color: MyColors.mainColor,
                     ),
-                    child: Text('Üye Olmadan Devam Et'),
+                    child: Text(
+                      'Üye Olmadan Devam Et',
+                      style: TextStyle(color: MyColors.mainColor),
+                    ),
                   ),
                 ],
               ),
