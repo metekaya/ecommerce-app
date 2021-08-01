@@ -4,23 +4,29 @@ import 'package:ionicons/ionicons.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
-class LoginScreen extends StatefulWidget {
-  static const routeName = '/LoginScreen';
-  const LoginScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatefulWidget {
+  static const routeName = '/SignUpScreen';
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final FocusNode _passwordFocusNode = FocusNode();
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _phoneNumberFocusNode = FocusNode();
   String _emailAdress = '';
   String _password = '';
+  String _fullName = '';
+  late int _phoneNumber;
   bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
   @override
   void dispose() {
     _passwordFocusNode.dispose();
+    _emailFocusNode.dispose();
+    _phoneNumberFocusNode.dispose();
     super.dispose();
   }
 
@@ -70,19 +76,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Column(
               children: [
-                Container(
-                  margin: EdgeInsets.only(top: 80),
-                  height: 120,
-                  width: 320,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
-                        image: NetworkImage(
-                            'https://lh3.googleusercontent.com/proxy/ZOV7DmmGjPld-QaA8SnI0uIgX3nZzdQTdh8itr0-fgdGKE20vGFCPRSTlnwvh3agHBqAStEN_95GALW5rj9yvzvYZOTlsQ'),
-                        fit: BoxFit.fill),
-                    shape: BoxShape.rectangle,
-                  ),
-                ),
                 SizedBox(
                   height: 30,
                 ),
@@ -93,7 +86,36 @@ class _LoginScreenState extends State<LoginScreen> {
                       Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: TextFormField(
+                          key: ValueKey('name'),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'İsim alanı boş bırakılamaz';
+                            }
+                            return null;
+                          },
+                          textInputAction: TextInputAction.next,
+                          onEditingComplete: () => FocusScope.of(context)
+                              .requestFocus(_emailFocusNode),
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            border: const UnderlineInputBorder(),
+                            filled: true,
+                            prefixIcon: Icon(
+                              Ionicons.person_outline,
+                            ),
+                            labelText: 'İsim',
+                            fillColor: Theme.of(context).backgroundColor,
+                          ),
+                          onSaved: (value) {
+                            _fullName = value!;
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: TextFormField(
                           key: ValueKey('email'),
+                          focusNode: _emailFocusNode,
                           validator: (value) {
                             if (value!.isEmpty || !value.contains('@')) {
                               return 'Lütfen geçerli bir e-posta adresi giriniz.';
@@ -152,8 +174,37 @@ class _LoginScreenState extends State<LoginScreen> {
                           onSaved: (value) {
                             _password = value!;
                           },
-                          onEditingComplete: _submitForm,
+                          onEditingComplete: () => FocusScope.of(context)
+                              .requestFocus(_phoneNumberFocusNode),
                           obscureText: _obscureText,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: TextFormField(
+                          key: ValueKey('phone number'),
+                          focusNode: _phoneNumberFocusNode,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Lütfen geçerli bir telefon numarası giriniz';
+                            }
+                            return null;
+                          },
+                          textInputAction: TextInputAction.next,
+                          onEditingComplete: _submitForm,
+                          keyboardType: TextInputType.phone,
+                          decoration: InputDecoration(
+                            border: const UnderlineInputBorder(),
+                            filled: true,
+                            prefixIcon: Icon(
+                              Ionicons.call_outline,
+                            ),
+                            labelText: 'Telefon Numarası',
+                            fillColor: Theme.of(context).backgroundColor,
+                          ),
+                          onSaved: (value) {
+                            _phoneNumber = int.parse(value!);
+                          },
                         ),
                       ),
                     ],
@@ -184,7 +235,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       onPressed: _submitForm,
                       child: Text(
-                        'Giriş Yap',
+                        'Kayıt Ol',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 17,

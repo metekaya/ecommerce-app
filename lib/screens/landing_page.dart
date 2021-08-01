@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
 import 'package:intern_app/screens/login.dart';
+import 'package:intern_app/screens/sign_up.dart';
 import 'package:ionicons/ionicons.dart';
 
 class LandingPage extends StatefulWidget {
@@ -69,6 +70,7 @@ class _LandingPageState extends State<LandingPage>
               children: [
                 Text(
                   'Kuartek Proje Tasarım',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
@@ -145,7 +147,8 @@ class _LandingPageState extends State<LandingPage>
                           ),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () =>
+                          Navigator.pushNamed(context, SignUpScreen.routeName),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
