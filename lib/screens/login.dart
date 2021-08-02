@@ -69,18 +69,38 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
+            Positioned(
+              top: 10,
+              left: 10,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  splashColor: MyColors.mainColor,
+                  hoverColor: MyColors.mainColor,
+                  borderRadius: BorderRadius.circular(18),
+                  onTap: () => Navigator.pop(context),
+                  child: Container(
+                    height: 30,
+                    width: 30,
+                    child: Icon(
+                      Ionicons.chevron_back,
+                      color: Theme.of(context).cardColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 80),
-                  height: 120,
-                  width: 320,
+                  margin: EdgeInsets.only(top: 40),
+                  height: 200,
+                  width: 200,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
-                        image: NetworkImage(
-                            'https://lh3.googleusercontent.com/proxy/ZOV7DmmGjPld-QaA8SnI0uIgX3nZzdQTdh8itr0-fgdGKE20vGFCPRSTlnwvh3agHBqAStEN_95GALW5rj9yvzvYZOTlsQ'),
-                        fit: BoxFit.fill),
+                        image: NetworkImage('https://i.imgur.com/5OpzVTZ.jpg'),
+                        fit: BoxFit.cover),
                     shape: BoxShape.rectangle,
                   ),
                 ),
@@ -214,7 +234,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text(
                       'Veya şununla devam et',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Theme.of(context).textSelectionColor,
                       ),
                     ),
                     Expanded(

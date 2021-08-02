@@ -48,7 +48,7 @@ class _ProductImagesState extends State<ProductImages> {
             ),
           ),
           RoundedContainer(
-            color: Colors.white,
+            color: Theme.of(context).buttonColor,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

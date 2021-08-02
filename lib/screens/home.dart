@@ -54,9 +54,10 @@ class HomeScreen extends StatelessWidget {
                 onPressed: () {},
                 icon: CircleAvatar(
                   backgroundColor: Colors.white,
-                  radius: 15,
+                  radius: 13,
                   child: CircleAvatar(
-                    radius: 13,
+                    radius: 10,
+                    backgroundColor: Theme.of(context).buttonColor,
                     backgroundImage: NetworkImage(
                       'https://image.flaticon.com/icons/png/512/17/17004.png',
                     ),

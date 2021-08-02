@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intern_app/consts/MyColors.dart';
 import 'package:intern_app/screens/login.dart';
 import 'package:ionicons/ionicons.dart';
@@ -42,6 +43,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
+  void _pickImageCamera() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.camera);
+    final pickedImageFile = File(pickedImage!.path);
+    setState(() {
+      _pickedImage = pickedImageFile;
+    });
+    Navigator.pop(context);
+  }
+
+  void _pickImageGallery() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    final pickedImageFile = File(pickedImage!.path);
+    setState(() {
+      _pickedImage = pickedImageFile;
+    });
+    Navigator.pop(context);
+  }
+
+  void _removeImage() {
+    setState(() {
+      _pickedImage = null;
+    });
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,6 +106,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
             ),
+            Positioned(
+              top: 10,
+              left: 10,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  splashColor: MyColors.mainColor,
+                  hoverColor: MyColors.mainColor,
+                  borderRadius: BorderRadius.circular(18),
+                  onTap: () => Navigator.pop(context),
+                  child: Container(
+                    height: 30,
+                    width: 30,
+                    child: Icon(
+                      Ionicons.chevron_back,
+                      color: Theme.of(context).cardColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Column(
               children: [
                 SizedBox(
@@ -93,6 +142,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         backgroundColor: MyColors.accentColor,
                         child: CircleAvatar(
                           radius: 69,
+                          backgroundColor: MyColors.mediumGrey,
                           backgroundImage: _pickedImage == null
                               ? null
                               : FileImage(_pickedImage!),
@@ -116,37 +166,106 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Seçenekler',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: MyColors.mainColor,
-                                    ),
-                                  ),
+                                title: Text(
+                                  'Seçenekler',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: MyColors.mainColor),
                                 ),
                                 content: SingleChildScrollView(
                                   child: ListBody(
                                     children: [
-                                      cameraListItems(
-                                          'Kamera',
-                                          Ionicons.camera_outline,
-                                          Colors.green,
-                                          Colors.black),
-                                      cameraListItems(
-                                        'Galeriden Seç',
-                                        Ionicons.image_outline,
-                                        Colors.green,
-                                        Colors.black,
+                                      InkWell(
+                                        onTap: _pickImageCamera,
+                                        splashColor: MyColors.accentColor,
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Icon(
+                                                Ionicons.camera_outline,
+                                                color: MyColors.mainColor,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Kamera',
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: MyColors.mainColor),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      cameraListItems(
-                                        'Sil',
-                                        Ionicons.trash_outline,
-                                        Colors.red,
-                                        Colors.red,
+                                      InkWell(
+                                        onTap: _pickImageGallery,
+                                        splashColor: MyColors.mainColor,
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Icon(
+                                                Ionicons.image_outline,
+                                                color: MyColors.mainColor,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Galeriden Seç',
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: MyColors.mainColor),
+                                            )
+                                          ],
+                                        ),
                                       ),
+                                      InkWell(
+                                        onTap: _removeImage,
+                                        splashColor: MyColors.accentColor,
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Icon(
+                                                Ionicons.trash_outline,
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Sil',
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.red),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      // children: [
+                                      //   cameraListItems(
+                                      //       _pickImageCamera,
+                                      //       'Kamera',
+                                      //       Ionicons.camera_outline,
+                                      //       Colors.green,
+                                      //       Colors.black),
+                                      //   cameraListItems(
+                                      //     _pickImageGallery,
+                                      //     'Galeriden Seç',
+                                      //     Ionicons.image_outline,
+                                      //     Colors.green,
+                                      //     Colors.black,
+                                      //   ),
+                                      //   cameraListItems(
+                                      //     _removeImage,
+                                      //     'Sil',
+                                      //     Ionicons.trash_outline,
+                                      //     Colors.red,
+                                      //     Colors.red,
+                                      //   ),
+                                      // ],
                                     ],
                                   ),
                                 ),
@@ -360,9 +479,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget cameraListItems(
-      String title, IconData icon, Color color, Color textColor) {
+      Function fct, String title, IconData icon, Color color, Color textColor) {
     return InkWell(
-      onTap: () {},
+      onTap: fct(),
       splashColor: MyColors.gradientFEnd,
       child: Row(
         children: [

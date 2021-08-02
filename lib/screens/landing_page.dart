@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
+import 'package:intern_app/screens/bottom_bar.dart';
 import 'package:intern_app/screens/login.dart';
 import 'package:intern_app/screens/sign_up.dart';
 import 'package:ionicons/ionicons.dart';
@@ -236,7 +237,8 @@ class _LandingPageState extends State<LandingPage>
                     ),
                   ),
                   OutlineButton(
-                    onPressed: () {},
+                    onPressed: () =>
+                        Navigator.pushNamed(context, BottomBarScreen.routeName),
                     shape: StadiumBorder(),
                     highlightedBorderColor: Colors.green.shade300,
                     borderSide: BorderSide(

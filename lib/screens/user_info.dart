@@ -210,8 +210,21 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                       switchActiveColor: MyColors.mainColor,
                       title: Text('Koyu Tema (WIP)'),
                     ),
-                    userListTile(
-                        'Çıkış yap', 'Çıkış', Ionicons.exit_outline, context),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        splashColor: Theme.of(context).splashColor,
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.canPop(context)
+                                ? Navigator.pop(context)
+                                : null;
+                          },
+                          title: Text('Çıkış Yap'),
+                          leading: Icon(Ionicons.log_out_outline),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

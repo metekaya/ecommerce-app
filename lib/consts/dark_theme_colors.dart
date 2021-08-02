@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:intern_app/consts/myColors.dart';
+import 'package:intern_app/consts/MyColors.dart';
 
 class Styles {
   static ThemeData themeData(bool isDarkTheme, BuildContext context) {
@@ -16,7 +16,7 @@ class Styles {
       indicatorColor: isDarkTheme ? Colors.grey : MyColors.endColor2,
       buttonColor: isDarkTheme ? Color(0xff3B3B3B) : Color(0xffF1F5FB),
       hintColor: isDarkTheme ? Colors.grey.shade300 : Colors.grey.shade800,
-      highlightColor: isDarkTheme ? MyColors.subTitle : MyColors.endColor2,
+      highlightColor: isDarkTheme ? MyColors.mediumGrey : MyColors.endColor2,
       hoverColor: isDarkTheme ? Color(0xff3A3A3B) : MyColors.endColor2,
       focusColor: isDarkTheme ? Color(0xff0B2512) : Color(0xffA8DAB5),
       disabledColor: Colors.grey,

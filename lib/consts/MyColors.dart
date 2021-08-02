@@ -4,7 +4,7 @@ class MyColors {
   static Color mainColor = Color(0xFF009603);
   static Color secondaryColor = Color(0xFF393236);
   static Color accentColor = Color(0xFFEBA916);
-  static Color subTitle = Color(0xFF393236);
+  static Color mediumGrey = Color(0xFF595256);
   static Color backgroundColor = Color(0xFF393236);
   static Color scaffoldDark = Color(0xFF181818);
   static Color darkBackground = Color(0xFF1D1D21);

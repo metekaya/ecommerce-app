@@ -10,6 +10,7 @@ import 'package:intern_app/screens/landing_page.dart';
 import 'package:intern_app/screens/login.dart';
 import 'package:intern_app/screens/product_details.dart';
 import 'package:intern_app/screens/sign_up.dart';
+import 'package:intern_app/screens/upload_product_form.dart';
 import 'package:intern_app/screens/wishlist.dart';
 import 'package:provider/provider.dart';
 
@@ -60,11 +61,13 @@ class _MyAppState extends State<MyApp> {
             theme: Styles.themeData(themeChangeProvider.darkTheme, context),
             home: LandingPage(),
             routes: {
+              BottomBarScreen.routeName: (ctx) => BottomBarScreen(),
               CartScreen.routeName: (ctx) => CartScreen(),
               LoginScreen.routeName: (ctx) => LoginScreen(),
               SignUpScreen.routeName: (ctx) => SignUpScreen(),
               FeedsScreen.routeName: (ctx) => FeedsScreen(),
               WishlistScreen.routeName: (ctx) => WishlistScreen(),
+              UploadProductForm.routeName: (ctx) => UploadProductForm(),
               ProductDetailsScreen.routeName: (ctx) => ProductDetailsScreen(),
             },
           );

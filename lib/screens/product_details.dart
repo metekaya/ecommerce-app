@@ -3,6 +3,7 @@ import 'package:intern_app/consts/MyColors.dart';
 import 'package:intern_app/provider/cart_provider.dart';
 import 'package:intern_app/provider/products.dart';
 import 'package:intern_app/widget/product_design.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         margin: EdgeInsets.only(bottom: 80),
         child: ProductDesign(),
       ),
-      backgroundColor: Color(0xFFF5F6F9),
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -43,7 +44,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         leading: Padding(
           padding: const EdgeInsets.all(5),
           child: AppbarIconButton(
-            iconData: Icons.arrow_back_ios,
+            iconData: Ionicons.chevron_back,
             press: () => Navigator.of(context).pop(context),
           ),
         ),
@@ -55,7 +56,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.10,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).buttonColor,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
           bottomLeft: Radius.circular(20),
