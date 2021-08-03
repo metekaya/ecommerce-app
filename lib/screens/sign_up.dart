@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intern_app/consts/MyColors.dart';
@@ -27,6 +28,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   File? _pickedImage;
   bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   void dispose() {
     _passwordFocusNode.dispose();
@@ -40,6 +43,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState!.save();
+      _auth.createUserWithEmailAndPassword(
+          email: _emailAdress.toLowerCase().trim(), password: _password.trim());
     }
   }
 
