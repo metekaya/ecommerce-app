@@ -38,13 +38,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
-  void _submitForm() {
+  void _submitForm() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState!.save();
-      _auth.createUserWithEmailAndPassword(
-          email: _emailAdress.toLowerCase().trim(), password: _password.trim());
+      try {
+        await _auth.createUserWithEmailAndPassword(
+            email: _emailAdress.toLowerCase().trim(),
+            password: _password.trim());
+      } catch (error) {
+        showErrorDialog('Bir Hata Oluştu', '$error');
+        print('an error occured $error');
+      }
     }
   }
 
@@ -480,6 +486,80 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> showErrorDialog(String mainTitle, String subTitle) async {
+    showGeneralDialog(
+      barrierLabel: "Barrier",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: Duration(milliseconds: 700),
+      context: context,
+      pageBuilder: (_, __, ___) {
+        return Material(
+          type: MaterialType.transparency,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: 300,
+              child: SizedBox.expand(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        mainTitle,
+                        style: TextStyle(
+                          fontFamily: 'Raleway',
+                          fontSize: 24,
+                          color: Colors.red,
+                        ),
+                      ),
+                      Text(
+                        subTitle,
+                        style: TextStyle(
+                          fontFamily: 'Raleway',
+                          fontSize: 18,
+                          color: Colors.red,
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        child: TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text(
+                            'Tamam',
+                            style: TextStyle(
+                                fontFamily: 'Raleway',
+                                fontSize: 18,
+                                color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              margin: EdgeInsets.only(bottom: 50, left: 12, right: 12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(40),
+              ),
+            ),
+          ),
+        );
+      },
+      transitionBuilder: (_, anim, __, child) {
+        return SlideTransition(
+          position: Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim),
+          child: child,
+        );
+      },
     );
   }
 
