@@ -12,6 +12,7 @@ import 'package:intern_app/screens/login.dart';
 import 'package:intern_app/screens/product_details.dart';
 import 'package:intern_app/screens/sign_up.dart';
 import 'package:intern_app/screens/upload_product_form.dart';
+import 'package:intern_app/screens/user_state.dart';
 import 'package:intern_app/screens/wishlist.dart';
 import 'package:provider/provider.dart';
 
@@ -85,7 +86,7 @@ class _MyAppState extends State<MyApp> {
                   title: 'Intern App',
                   theme:
                       Styles.themeData(themeChangeProvider.darkTheme, context),
-                  home: LandingPage(),
+                  home: UserState(),
                   routes: {
                     BottomBarScreen.routeName: (ctx) => BottomBarScreen(),
                     CartScreen.routeName: (ctx) => CartScreen(),

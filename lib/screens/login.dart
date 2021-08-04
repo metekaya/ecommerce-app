@@ -37,9 +37,12 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       _formKey.currentState!.save();
       try {
-        await _auth.signInWithEmailAndPassword(
-            email: _emailAdress.toLowerCase().trim(),
-            password: _password.trim());
+        await _auth
+            .signInWithEmailAndPassword(
+                email: _emailAdress.toLowerCase().trim(),
+                password: _password.trim())
+            .then((value) =>
+                Navigator.canPop(context) ? Navigator.pop(context) : null);
       } catch (error) {
         showErrorDialog('Bir Hata Oluştu', '$error');
         print('an error occured $error');
