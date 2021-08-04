@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intern_app/consts/MyColors.dart';
 import 'package:intern_app/screens/bottom_bar.dart';
 import 'package:intern_app/screens/login.dart';
@@ -17,6 +19,8 @@ class _LandingPageState extends State<LandingPage>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -43,6 +47,26 @@ class _LandingPageState extends State<LandingPage>
   void dispose() {
     _animationController.dispose();
     super.dispose();
+  }
+
+  Future<void> _googleSignIn() async {
+    final googleSignIn = GoogleSignIn();
+    final googleAccount = await googleSignIn.signIn();
+    if (googleAccount != null) {
+      final googleAuth = await googleAccount.authentication;
+      if (googleAuth.accessToken != null && googleAuth.idToken != null) {
+        try {
+          final authResult = await _auth.signInWithCredential(
+            GoogleAuthProvider.credential(
+              idToken: googleAuth.idToken,
+              accessToken: googleAuth.accessToken,
+            ),
+          );
+        } catch (error) {
+          print('error occured $error');
+        }
+      }
+    }
   }
 
   @override
@@ -212,7 +236,7 @@ class _LandingPageState extends State<LandingPage>
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   OutlineButton(
-                    onPressed: () {},
+                    onPressed: _googleSignIn,
                     shape: StadiumBorder(),
                     highlightedBorderColor: Colors.red.shade300,
                     borderSide: BorderSide(

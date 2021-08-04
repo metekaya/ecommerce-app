@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
-import 'package:intern_app/provider/cart_provider.dart';
 import 'package:intern_app/provider/products.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:intern_app/widget/cart_full.dart';
-import 'package:intern_app/widget/empty_cart.dart';
 import 'package:intern_app/widget/empty_wishlist.dart';
 import 'package:intern_app/widget/wishlist_full.dart';
-import 'package:ionicons/ionicons.dart';
 
 class WishlistScreen extends StatelessWidget {
   static const routeName = '/WishlistScreen';
@@ -12,7 +9,7 @@ class WishlistScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List wishlistItems = [];
     return Scaffold(
-      body: !wishlistItems.isEmpty
+      body: wishlistItems.isEmpty
           ? Scaffold(
               body: EmptyWishlist(),
             )

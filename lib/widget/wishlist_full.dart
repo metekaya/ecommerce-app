@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
-import 'package:ionicons/ionicons.dart';
 
 class WishlistFull extends StatefulWidget {
   const WishlistFull({Key? key}) : super(key: key);

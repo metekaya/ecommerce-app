@@ -7,7 +7,6 @@ import 'package:intern_app/provider/products.dart';
 import 'package:intern_app/screens/bottom_bar.dart';
 import 'package:intern_app/screens/cart.dart';
 import 'package:intern_app/screens/feeds.dart';
-import 'package:intern_app/screens/landing_page.dart';
 import 'package:intern_app/screens/login.dart';
 import 'package:intern_app/screens/product_details.dart';
 import 'package:intern_app/screens/sign_up.dart';

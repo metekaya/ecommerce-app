@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
 import 'package:intern_app/provider/dark_theme_provider.dart';
@@ -15,6 +16,7 @@ class UserInfoScreen extends StatefulWidget {
 class _UserInfoScreenState extends State<UserInfoScreen> {
   var top = 0.0;
   late ScrollController _scrollController;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -216,9 +218,8 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                         splashColor: Theme.of(context).splashColor,
                         child: ListTile(
                           onTap: () {
-                            Navigator.canPop(context)
-                                ? Navigator.pop(context)
-                                : null;
+                            showErrorDialog(
+                                'Çıkış yapmak istediğinize emin misiniz?');
                           },
                           title: Text('Çıkış Yap'),
                           leading: Icon(Ionicons.log_out_outline),
@@ -233,6 +234,100 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
           _buildFab(),
         ],
       ),
+    );
+  }
+
+  Future<void> showErrorDialog(String mainTitle) async {
+    showGeneralDialog(
+      barrierLabel: "Barrier",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: Duration(milliseconds: 700),
+      context: context,
+      pageBuilder: (_, __, ___) {
+        return Material(
+          type: MaterialType.transparency,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: 250,
+              child: SizedBox.expand(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(
+                        Ionicons.alert_circle_outline,
+                        size: 50,
+                        color: Colors.red,
+                      ),
+                      Text(
+                        mainTitle,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Theme.of(context).textSelectionColor,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade300,
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                'İptal Et',
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            child: TextButton(
+                              onPressed: () {
+                                _auth.signOut();
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                'Çıkış Yap',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Theme.of(context).buttonColor),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              margin: EdgeInsets.only(bottom: 50, left: 12, right: 12),
+              decoration: BoxDecoration(
+                color: Theme.of(context).backgroundColor,
+                borderRadius: BorderRadius.circular(40),
+              ),
+            ),
+          ),
+        );
+      },
+      transitionBuilder: (_, anim, __, child) {
+        return SlideTransition(
+          position: Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim),
+          child: child,
+        );
+      },
     );
   }
 

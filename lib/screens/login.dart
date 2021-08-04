@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intern_app/consts/MyColors.dart';
 import 'package:intern_app/screens/sign_up.dart';
 import 'package:ionicons/ionicons.dart';
@@ -26,6 +27,26 @@ class _LoginScreenState extends State<LoginScreen> {
   void dispose() {
     _passwordFocusNode.dispose();
     super.dispose();
+  }
+
+  Future<void> _googleSignIn() async {
+    final googleSignIn = GoogleSignIn();
+    final googleAccount = await googleSignIn.signIn();
+    if (googleAccount != null) {
+      final googleAuth = await googleAccount.authentication;
+      if (googleAuth.accessToken != null && googleAuth.idToken != null) {
+        try {
+          final authResult = await _auth.signInWithCredential(
+            GoogleAuthProvider.credential(
+              idToken: googleAuth.idToken,
+              accessToken: googleAuth.accessToken,
+            ),
+          );
+        } catch (error) {
+          print('error occured $error');
+        }
+      }
+    }
   }
 
   void _submitForm() async {
@@ -278,7 +299,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     OutlineButton(
-                      onPressed: () {},
+                      onPressed: _googleSignIn,
                       shape: StadiumBorder(),
                       highlightedBorderColor: Colors.red.shade300,
                       borderSide: BorderSide(
