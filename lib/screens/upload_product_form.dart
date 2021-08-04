@@ -1,9 +1,13 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:uuid/uuid.dart';
 
 class UploadProductForm extends StatefulWidget {
   static const routeName = '/UploadProductForm';
@@ -21,6 +25,10 @@ class _UploadProductFormState extends State<UploadProductForm> {
   var _productBrand = '';
   var _productDescription = '';
   var _productQuantity = '';
+  bool isLoading = false;
+  var uuid = Uuid();
+  late String url;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _brandController = TextEditingController();
   String? _categoryValue;
@@ -49,7 +57,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
     );
   }
 
-  void _trySubmit() {
+  void _trySubmit() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
 
@@ -62,6 +70,44 @@ class _UploadProductFormState extends State<UploadProductForm> {
       print(_productDescription);
       print(_productQuantity);
       // Use those values to send our auth request ...
+    }
+    if (isValid) {
+      _formKey.currentState!.save();
+      try {
+        if (_pickedImage == null) {
+          showErrorDialog(
+              'Bir Hata Oluştu', 'Lütfen bir profil fotoğrafı seçiniz');
+        } else {
+          final ref = FirebaseStorage.instance
+              .ref()
+              .child('productsImages')
+              .child(_productTitle + '.jpg');
+          await ref.putFile(_pickedImage!);
+          url = await ref.getDownloadURL();
+          final User? user = _auth.currentUser;
+          final _uid = user!.uid;
+          final productId = uuid.v4();
+          await FirebaseFirestore.instance
+              .collection('products')
+              .doc(productId)
+              .set({
+            'productId': productId,
+            'productTitle': _productTitle,
+            'price': _productPrice,
+            'productImage': url,
+            'productCategory': _productCategory,
+            'productBrand': _productBrand,
+            'productDescription': _productDescription,
+            'productQuantity': _productQuantity,
+            'userId': _uid,
+            'createdAt': Timestamp.now(),
+          });
+          Navigator.canPop(context) ? Navigator.pop(context) : null;
+        }
+      } catch (error) {
+        showErrorDialog('Bir Hata Oluştu', '$error');
+        print('an error occured $error');
+      }
     }
   }
 
@@ -124,9 +170,15 @@ class _UploadProductFormState extends State<UploadProductForm> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(right: 2),
-                  child: Text('Yükle',
-                      style: TextStyle(fontSize: 16),
-                      textAlign: TextAlign.center),
+                  child: isLoading
+                      ? Center(
+                          child: Container(
+                              height: 40,
+                              width: 40,
+                              child: CircularProgressIndicator()))
+                      : Text('Yükle',
+                          style: TextStyle(fontSize: 16),
+                          textAlign: TextAlign.center),
                 ),
                 GradientIcon(
                   Ionicons.cloud_upload_outline,
@@ -514,6 +566,80 @@ class _UploadProductFormState extends State<UploadProductForm> {
       _brandController.text = value!;
       print(_productBrand);
     });
+  }
+
+  Future<void> showErrorDialog(String mainTitle, String subTitle) async {
+    showGeneralDialog(
+      barrierLabel: "Barrier",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: Duration(milliseconds: 700),
+      context: context,
+      pageBuilder: (_, __, ___) {
+        return Material(
+          type: MaterialType.transparency,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: 300,
+              child: SizedBox.expand(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        mainTitle,
+                        style: TextStyle(
+                          fontFamily: 'Raleway',
+                          fontSize: 24,
+                          color: Colors.red,
+                        ),
+                      ),
+                      Text(
+                        subTitle,
+                        style: TextStyle(
+                          fontFamily: 'Raleway',
+                          fontSize: 18,
+                          color: Colors.red,
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        child: TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text(
+                            'Tamam',
+                            style: TextStyle(
+                                fontFamily: 'Raleway',
+                                fontSize: 18,
+                                color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              margin: EdgeInsets.only(bottom: 50, left: 12, right: 12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(40),
+              ),
+            ),
+          ),
+        );
+      },
+      transitionBuilder: (_, anim, __, child) {
+        return SlideTransition(
+          position: Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim),
+          child: child,
+        );
+      },
+    );
   }
 }
 

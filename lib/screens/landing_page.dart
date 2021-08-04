@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -21,6 +22,7 @@ class _LandingPageState extends State<LandingPage>
   late Animation<double> _animation;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -56,16 +58,49 @@ class _LandingPageState extends State<LandingPage>
       final googleAuth = await googleAccount.authentication;
       if (googleAuth.accessToken != null && googleAuth.idToken != null) {
         try {
+          var date = DateTime.now().toString();
+          var dateparse = DateTime.parse(date);
+          var formattedDate =
+              "${dateparse.day}/${dateparse.month}/${dateparse.year}";
           final authResult = await _auth.signInWithCredential(
             GoogleAuthProvider.credential(
               idToken: googleAuth.idToken,
               accessToken: googleAuth.accessToken,
             ),
           );
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(authResult.user!.uid)
+              .set({
+            'id': authResult.user!.uid,
+            'name': authResult.user!.displayName,
+            'email': authResult.user!.email,
+            'phoneNumber': authResult.user!.phoneNumber,
+            'imageUrl': authResult.user!.photoURL,
+            'joinedAt': formattedDate,
+            'createdAt': Timestamp.now(),
+          });
         } catch (error) {
           print('error occured $error');
         }
       }
+    }
+  }
+
+  void _loginAnonymously() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      await _auth.signInAnonymously();
+    } catch (error) {
+      showErrorDialog('Bir Hata Oluştu', '$error');
+      print('an error occured $error');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -260,20 +295,22 @@ class _LandingPageState extends State<LandingPage>
                       ],
                     ),
                   ),
-                  OutlineButton(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, BottomBarScreen.routeName),
-                    shape: StadiumBorder(),
-                    highlightedBorderColor: Colors.green.shade300,
-                    borderSide: BorderSide(
-                      width: 2,
-                      color: MyColors.mainColor,
-                    ),
-                    child: Text(
-                      'Üye Olmadan Devam Et',
-                      style: TextStyle(color: MyColors.mainColor),
-                    ),
-                  ),
+                  isLoading
+                      ? CircularProgressIndicator()
+                      : OutlineButton(
+                          onPressed: _loginAnonymously,
+                          // Navigator.pushNamed(context, BottomBarScreen.routeName),
+                          shape: StadiumBorder(),
+                          highlightedBorderColor: Colors.green.shade300,
+                          borderSide: BorderSide(
+                            width: 2,
+                            color: MyColors.mainColor,
+                          ),
+                          child: Text(
+                            'Üye Olmadan Devam Et',
+                            style: TextStyle(color: MyColors.mainColor),
+                          ),
+                        ),
                 ],
               ),
               SizedBox(
@@ -283,6 +320,80 @@ class _LandingPageState extends State<LandingPage>
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> showErrorDialog(String mainTitle, String subTitle) async {
+    showGeneralDialog(
+      barrierLabel: "Barrier",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: Duration(milliseconds: 700),
+      context: context,
+      pageBuilder: (_, __, ___) {
+        return Material(
+          type: MaterialType.transparency,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: 300,
+              child: SizedBox.expand(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        mainTitle,
+                        style: TextStyle(
+                          fontFamily: 'Raleway',
+                          fontSize: 24,
+                          color: Colors.red,
+                        ),
+                      ),
+                      Text(
+                        subTitle,
+                        style: TextStyle(
+                          fontFamily: 'Raleway',
+                          fontSize: 18,
+                          color: Colors.red,
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        child: TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text(
+                            'Tamam',
+                            style: TextStyle(
+                                fontFamily: 'Raleway',
+                                fontSize: 18,
+                                color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              margin: EdgeInsets.only(bottom: 50, left: 12, right: 12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(40),
+              ),
+            ),
+          ),
+        );
+      },
+      transitionBuilder: (_, anim, __, child) {
+        return SlideTransition(
+          position: Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim),
+          child: child,
+        );
+      },
     );
   }
 }

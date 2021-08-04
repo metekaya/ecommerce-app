@@ -38,16 +38,22 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   void getData() async {
     User user = _auth.currentUser!;
     _uid = user.uid;
-    final DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.collection('users').doc(_uid).get();
-    setState(() {
-      _name = userDoc.get('name');
-      _joinedAt = userDoc.get('joinedAt');
-      _email = userDoc.get('email');
-      _joinedAt = userDoc.get('joinedAt');
-      _phoneNumber = userDoc.get('phoneNumber');
-      _imageUrl = userDoc.get('imageUrl');
-    });
+
+    final DocumentSnapshot userDoc;
+    if (user.isAnonymous) {
+      return null;
+    } else {
+      userDoc =
+          await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+      setState(() {
+        _name = userDoc.get('name');
+        _joinedAt = userDoc.get('joinedAt');
+        _email = userDoc.get('email');
+        _joinedAt = userDoc.get('joinedAt');
+        _phoneNumber = userDoc.get('phoneNumber');
+        _imageUrl = userDoc.get('imageUrl');
+      });
+    }
   }
 
   @override
@@ -117,7 +123,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                                     width: 12,
                                   ),
                                   Text(
-                                    _name ?? '',
+                                    _name ?? 'Misafir',
                                     style: TextStyle(
                                       fontSize: 20,
                                       color: Colors.white,
@@ -208,8 +214,11 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                     ),
                     userListTile('E Posta', _email ?? '', Ionicons.mail_outline,
                         context),
-                    userListTile('Telefon', _phoneNumber.toString(),
-                        Ionicons.call_outline, context),
+                    userListTile(
+                        'Telefon',
+                        _phoneNumber == null ? '' : _phoneNumber.toString(),
+                        Ionicons.call_outline,
+                        context),
                     userListTile('Teslimat Adresi', 'Meydan Mah. Laleli Sok.',
                         Icons.local_shipping_outlined, context),
                     userListTile('Katılma Tarihi', _joinedAt ?? '',
