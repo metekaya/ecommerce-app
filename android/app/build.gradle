@@ -39,6 +39,8 @@ android {
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -55,8 +57,10 @@ flutter {
 }
 
 dependencies {
+    def multidex_version = "2.0.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation platform('com.google.firebase:firebase-bom:28.3.0')
+    
 }
 
 apply plugin: 'com.google.gms.google-services'

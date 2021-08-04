@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
@@ -17,6 +18,12 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   var top = 0.0;
   late ScrollController _scrollController;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  String? _uid;
+  String? _name;
+  String? _imageUrl;
+  String? _email;
+  String? _joinedAt;
+  int? _phoneNumber;
 
   @override
   void initState() {
@@ -24,6 +31,22 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     _scrollController = ScrollController();
     _scrollController.addListener(() {
       setState(() {});
+    });
+    getData();
+  }
+
+  void getData() async {
+    User user = _auth.currentUser!;
+    _uid = user.uid;
+    final DocumentSnapshot userDoc =
+        await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+    setState(() {
+      _name = userDoc.get('name');
+      _joinedAt = userDoc.get('joinedAt');
+      _email = userDoc.get('email');
+      _joinedAt = userDoc.get('joinedAt');
+      _phoneNumber = userDoc.get('phoneNumber');
+      _imageUrl = userDoc.get('imageUrl');
     });
   }
 
@@ -85,7 +108,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                                       shape: BoxShape.circle,
                                       image: DecorationImage(
                                         fit: BoxFit.scaleDown,
-                                        image: NetworkImage(
+                                        image: NetworkImage(_imageUrl ??
                                             'https://image.flaticon.com/icons/png/512/17/17004.png'),
                                       ),
                                     ),
@@ -94,7 +117,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                                     width: 12,
                                   ),
                                   Text(
-                                    'Misafir',
+                                    _name ?? '',
                                     style: TextStyle(
                                       fontSize: 20,
                                       color: Colors.white,
@@ -107,7 +130,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                         ),
                         background: Image(
                           fit: BoxFit.cover,
-                          image: NetworkImage(
+                          image: NetworkImage(_imageUrl ??
                               'https://image.flaticon.com/icons/png/512/17/17004.png'),
                         ),
                       ),
@@ -183,13 +206,13 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                       thickness: 1,
                       color: Colors.grey,
                     ),
-                    userListTile('E Posta', 'metekaya55@gmail.com',
-                        Ionicons.mail_outline, context),
-                    userListTile('Telefon', '+90 543 389 63 77',
+                    userListTile('E Posta', _email ?? '', Ionicons.mail_outline,
+                        context),
+                    userListTile('Telefon', _phoneNumber.toString(),
                         Ionicons.call_outline, context),
                     userListTile('Teslimat Adresi', 'Meydan Mah. Laleli Sok.',
                         Icons.local_shipping_outlined, context),
-                    userListTile('Katılma Tarihi', '13.07.2021',
+                    userListTile('Katılma Tarihi', _joinedAt ?? '',
                         Ionicons.time_outline, context),
                     Padding(
                       padding: const EdgeInsets.only(left: 8, top: 8),
