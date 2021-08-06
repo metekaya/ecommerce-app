@@ -1,8 +1,49 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intern_app/models/product.dart';
 
 class Products with ChangeNotifier {
-  List<Product> _products = [
+  List<Product> _products = [];
+
+  List<Product> get products {
+    return _products;
+  }
+
+  Future<void> FetchProducts() async {
+    await FirebaseFirestore.instance
+        .collection('products')
+        .get()
+        .then((QuerySnapshot productsSnapshot) {
+      _products = [];
+      productsSnapshot.docs.forEach((element) {
+        _products.insert(
+          0,
+          Product(
+            element.get('productId'),
+            element.get('productTitle'),
+            element.get('productDescription'),
+            double.parse(element.get('price')),
+            element.get('productImage'),
+            element.get('productCategory'),
+            element.get('productBrand'),
+            false,
+            true,
+            int.parse(element.get('productQuantity')),
+          ),
+        );
+      });
+    });
+  }
+
+  List<Product> get popularProducts {
+    return _products.where((element) => element.isPopular).toList();
+  }
+
+  Product findById(String productId) {
+    return _products.firstWhere((element) => element.id == productId);
+  }
+  /* List<Product> _products = [
     Product(
       'pr1',
       'Premium Üyelik',
@@ -87,17 +128,5 @@ class Products with ChangeNotifier {
       true,
       45,
     ),
-  ];
-
-  List<Product> get products {
-    return _products;
-  }
-
-  List<Product> get popularProducts {
-    return _products.where((element) => element.isPopular).toList();
-  }
-
-  Product findById(String productId) {
-    return _products.firstWhere((element) => element.id == productId);
-  }
+  ];*/
 }

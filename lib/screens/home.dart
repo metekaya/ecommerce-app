@@ -14,6 +14,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(context);
+    productsData.FetchProducts();
     final popularItems = productsData.popularProducts;
     List _carouselItems = [
       '/images/carousel1.png',
