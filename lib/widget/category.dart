@@ -6,23 +6,27 @@ class CategoryWidget extends StatelessWidget {
   List<Map<String, String>> categories = [
     {
       'categoryName': 'Tasarımlar',
-      'categoryImagesPath': 'images/designs.jpg',
+      'categoryImagesPath': 'https://i.imgur.com/mIxPMdF.jpg',
     },
     {
       'categoryName': 'Abonelikler',
-      'categoryImagesPath': 'images/subscriptions.jpg',
+      'categoryImagesPath':
+          'https://i.pinimg.com/originals/11/7e/70/117e70dba431f4426259f2346196ce22.jpg',
     },
     {
       'categoryName': 'Yazılımlar',
-      'categoryImagesPath': 'images/softwares.png',
+      'categoryImagesPath':
+          'https://media.istockphoto.com/vectors/working-at-home-vector-flat-style-illustration-online-career-space-vector-id1241710244?k=6&m=1241710244&s=612x612&w=0&h=39pT_Gl0JD8cE9G6HGMpRP-LvtuXxdTikyU37dOc-7Y=',
     },
     {
       'categoryName': 'Entegrasyon',
-      'categoryImagesPath': 'images/integrations.jpg',
+      'categoryImagesPath':
+          'https://st2.depositphotos.com/2745455/6627/v/600/depositphotos_66273141-stock-illustration-concept-banner-of-team-work.jpg',
     },
     {
       'categoryName': 'Çözümler',
-      'categoryImagesPath': 'images/solutions.jpg',
+      'categoryImagesPath':
+          'https://media.istockphoto.com/vectors/tangle-tangled-and-unraveled-abstract-metaphor-vector-id1180554313?k=6&m=1180554313&s=612x612&w=0&h=w2TR1eye-Kj0p76zajTiV9H90XmOOBYDphrkVbQwwC4=',
     },
   ];
 
@@ -36,7 +40,7 @@ class CategoryWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage(
+              image: NetworkImage(
                 categories[index!]['categoryImagesPath']!,
               ),
             ),

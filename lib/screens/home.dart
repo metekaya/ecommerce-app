@@ -11,17 +11,18 @@ import 'package:intern_app/widget/popular_products.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
+  // String? _imageUrl;
   @override
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(context);
     productsData.FetchProducts();
     final popularItems = productsData.popularProducts;
-    List _carouselItems = [
-      '/images/carousel1.png',
-      'https://media.istockphoto.com/vectors/parking-lot-with-two-cars-on-city-background-vector-id1151016425?k=6&m=1151016425&s=612x612&w=0&h=jMdRBZulzerQgNhzsuZlmXNek6v4d_sOQpHk8yN55eI=',
-      'https://wwwi.globalpiyasa.com/lib/Urun/670/25c91b269169f3159e5e2056b87f6530_1.jpg',
-      'https://i.pinimg.com/originals/35/a3/01/35a301ff7eedf9a1277fe6d2d26ef02d.jpg',
-    ];
+    // List _carouselItems = [
+    //   '/images/carousel1.png',
+    //   'https://media.istockphoto.com/vectors/parking-lot-with-two-cars-on-city-background-vector-id1151016425?k=6&m=1151016425&s=612x612&w=0&h=jMdRBZulzerQgNhzsuZlmXNek6v4d_sOQpHk8yN55eI=',
+    //   'https://wwwi.globalpiyasa.com/lib/Urun/670/25c91b269169f3159e5e2056b87f6530_1.jpg',
+    //   'https://i.pinimg.com/originals/35/a3/01/35a301ff7eedf9a1277fe6d2d26ef02d.jpg',
+    // ];
     List _membershipItems = [
       'https://media.istockphoto.com/photos/premium-membership-gold-badge-picture-id530649463?k=6&m=530649463&s=170667a&w=0&h=CgsOLtH70dsBvDMBr8ZEPzBQ1qRP0VyrOcyADIKu6oo=',
       'https://wwwi.globalpiyasa.com/lib/Urun/670/bfdf3549f5ecdc4fb868dcbe75873656.jpg',
@@ -77,19 +78,20 @@ class HomeScreen extends StatelessWidget {
                   width: double.infinity,
                   child: Carousel(
                     images: [
-                      new Image.asset(
-                        _carouselItems[0],
+                      new Image.network(
+                        'https://i.imgur.com/5OpzVTZ.jpg',
+                        fit: BoxFit.contain,
                       ),
                       new Image.network(
-                        _carouselItems[1],
+                        'https://i.imgur.com/RrTcLFk.jpg',
                         fit: BoxFit.fill,
                       ),
-                      new Image.asset(
-                        '/images/carousel3.jpg',
+                      new Image.network(
+                        'https://i.imgur.com/FJbgIXy.jpg',
                         fit: BoxFit.fill,
                       ),
-                      new Image.asset(
-                        '/images/carousel4.jpg',
+                      new Image.network(
+                        'https://i.imgur.com/eKgdcPZ_d.webp?maxwidth=640&shape=thumb&fidelity=medium',
                         fit: BoxFit.fill,
                       ),
                     ],
