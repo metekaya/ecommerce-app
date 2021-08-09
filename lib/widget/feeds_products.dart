@@ -23,7 +23,7 @@ class _FeedsProductsState extends State<FeedsProducts> {
       ),
       child: Container(
         margin: EdgeInsets.all(10),
-        height: MediaQuery.of(context).size.height * 0.42,
+        height: MediaQuery.of(context).size.height * 0.45,
         width: MediaQuery.of(context).size.width * 0.47,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6),

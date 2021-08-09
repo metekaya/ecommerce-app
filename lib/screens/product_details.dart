@@ -91,7 +91,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         borderRadius: BorderRadius.circular(30),
         color: color,
       ),
-      width: MediaQuery.of(context).size.width * 0.4,
+      width: MediaQuery.of(context).size.width * 0.35,
       child: Material(
         borderRadius: BorderRadius.circular(30),
         color: Colors.transparent,
