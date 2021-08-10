@@ -102,7 +102,7 @@ class BackLayerMenu extends StatelessWidget {
         ),
         SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.all(40),
+            margin: EdgeInsets.all(20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
