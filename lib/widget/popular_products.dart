@@ -69,8 +69,8 @@ class PopularProducts extends StatelessWidget {
                       hoverColor: Colors.yellow.shade50,
                       splashColor: Colors.yellow.shade50,
                       child: Icon(
-                        Ionicons.star_outline,
-                        color: Colors.yellow,
+                        Ionicons.heart_outline,
+                        color: Colors.red.shade400,
                       ),
                     ),
                   ),

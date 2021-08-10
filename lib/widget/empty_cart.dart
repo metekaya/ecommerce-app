@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/MyColors.dart';
 import 'package:intern_app/provider/dark_theme_provider.dart';
+import 'package:intern_app/screens/feeds.dart';
 import 'package:provider/provider.dart';
 
 class EmptyCart extends StatelessWidget {
@@ -53,7 +54,8 @@ class EmptyCart extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.06,
           child: FloatingActionButton(
             backgroundColor: MyColors.mainColor,
-            onPressed: () {},
+            onPressed: () =>
+                Navigator.pushNamed(context, FeedsScreen.routeName),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
               side: BorderSide(
