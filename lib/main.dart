@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:intern_app/consts/dark_theme_colors.dart';
@@ -11,6 +12,7 @@ import 'package:intern_app/screens/login.dart';
 import 'package:intern_app/screens/product_details.dart';
 import 'package:intern_app/screens/sign_up.dart';
 import 'package:intern_app/screens/upload_product_form.dart';
+import 'package:intern_app/screens/user_info.dart';
 import 'package:intern_app/screens/user_state.dart';
 import 'package:intern_app/screens/wishlist.dart';
 import 'package:provider/provider.dart';
@@ -88,6 +90,7 @@ class _MyAppState extends State<MyApp> {
                   home: UserState(),
                   routes: {
                     BottomBarScreen.routeName: (ctx) => BottomBarScreen(),
+                    UserInfoScreen.routeName: (ctx) => UserInfoScreen(),
                     CartScreen.routeName: (ctx) => CartScreen(),
                     LoginScreen.routeName: (ctx) => LoginScreen(),
                     SignUpScreen.routeName: (ctx) => SignUpScreen(),

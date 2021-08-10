@@ -5,6 +5,7 @@ import 'package:intern_app/consts/MyColors.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:intern_app/provider/products.dart';
 import 'package:intern_app/screens/feeds.dart';
+import 'package:intern_app/screens/user_info.dart';
 import 'package:intern_app/widget/backlayer.dart';
 import 'package:intern_app/widget/category.dart';
 import 'package:intern_app/widget/popular_products.dart';
@@ -53,7 +54,8 @@ class HomeScreen extends StatelessWidget {
               IconButton(
                 splashRadius: 30,
                 iconSize: 15,
-                onPressed: () {},
+                onPressed: () =>
+                    Navigator.pushNamed(context, UserInfoScreen.routeName),
                 icon: CircleAvatar(
                   backgroundColor: Colors.white,
                   radius: 13,

@@ -10,6 +10,7 @@ import 'package:list_tile_switch/list_tile_switch.dart';
 import 'package:provider/provider.dart';
 
 class UserInfoScreen extends StatefulWidget {
+  static const routeName = '/UserInfoScreen';
   @override
   _UserInfoScreenState createState() => _UserInfoScreenState();
 }
